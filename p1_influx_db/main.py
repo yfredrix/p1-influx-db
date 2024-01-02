@@ -8,5 +8,10 @@ serial_reader = SerialReader(
     telegram_specification=telegram_specifications.V5
 )
 
+
 for telegram in serial_reader.read_as_object():
-    print(telegram)  # see 'Telegram object' docs below
+    for attr, value in telegram:
+
+        print(attr)
+        print(value)
+    break
