@@ -12,5 +12,11 @@ serial_reader = SerialReader(
 for telegram in serial_reader.read_as_object():
     for attr, value in telegram:
         print(attr)
-        print(value.to_json())
+        if attr == 'POWER_EVENT_FAILURE_LOG':
+            continue
+        if isinstance(value, list):
+            for sub_value in value:
+                print(sub_value.to_json())
+        else:
+            print(value.to_json())
     break
