@@ -28,13 +28,11 @@ serial_reader = SerialReader(
 
 for telegram in serial_reader.read_as_object():
     parsed_telegram = json.loads(telegram.to_json())
-    for k, v in parsed_telegram.items():
-        print(k)
-        print(v)
+
     p_elect = (
         influxdb_client.Point("electricity")
         .tag("unit", "kWh")
-        .tag("equipment_id", parsed_telegram["EQUIPMENT_IDENTIFIER"])
+        .tag("equipment_id", parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"])
     )
     for key in [
         "ELECTRICITY_USED_TARIFF_1",
@@ -55,7 +53,7 @@ for telegram in serial_reader.read_as_object():
         influxdb_client.Point("electricity_current")
         .tag("unit", "kW")
         .tag("actief_tarief", parsed_telegram["ELECTRICITY_ACTIVE_TARIFF"]["value"])
-        .tag("equipment_id", parsed_telegram["EQUIPMENT_IDENTIFIER"])
+        .tag("equipment_id", parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"])
     )
     for key in [
         "CURRENT_ELECTRICITY_USAGE",
@@ -79,7 +77,7 @@ for telegram in serial_reader.read_as_object():
     p_gas = (
         influxdb_client.Point("gas")
         .tag("unit", "m3")
-        .tag("equipment_id", parsed_telegram["EQUIPMENT_IDENTIFIER_GAS"])
+        .tag("equipment_id", parsed_telegram["EQUIPMENT_IDENTIFIER_GAS"]["value"])
     )
     if "HOURLY_GAS_METER_READING" in parsed_telegram:
         p_gas.field(
