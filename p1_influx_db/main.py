@@ -49,7 +49,7 @@ for telegram in serial_reader.read_as_object():
             logging.error("Unit is not kWh")
             continue
         p_elect.field(key.lower(), parsed_telegram[key]["value"])
-    p_elect.time(parsed_telegram["P1_MESSAGE_TIMESTAMP"])
+    p_elect.time(parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"])
 
     p_elect_current = (
         influxdb_client.Point("electricity_current")
@@ -74,6 +74,7 @@ for telegram in serial_reader.read_as_object():
             logging.error("Unit is not kW")
             continue
         p_elect_current.field(key.lower(), parsed_telegram[key]["value"])
+    p_elect_current.time(parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"])
 
     p_gas = (
         influxdb_client.Point("gas")
