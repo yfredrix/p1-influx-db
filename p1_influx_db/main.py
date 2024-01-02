@@ -11,7 +11,6 @@ serial_reader = SerialReader(
 
 for telegram in serial_reader.read_as_object():
     for attr, value in telegram:
-
         print(attr)
-        print(value)
+        print(value.to_json())
     break
