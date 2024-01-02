@@ -34,7 +34,7 @@ for telegram in serial_reader.read_as_object():
     p_elect = (
         influxdb_client.Point("electricity")
         .tag("unit", "kWh")
-        .tag("equipment_id", parsed_telegram["EQUIPMENT_IDENTIFIER_ELECTRICITY"])
+        .tag("equipment_id", parsed_telegram["EQUIPMENT_IDENTIFIER"])
     )
     for key in [
         "ELECTRICITY_USED_TARIFF_1",
@@ -55,7 +55,7 @@ for telegram in serial_reader.read_as_object():
         influxdb_client.Point("electricity_current")
         .tag("unit", "kW")
         .tag("actief_tarief", parsed_telegram["ELECTRICITY_ACTIVE_TARIFF"]["value"])
-        .tag("equipment_id", parsed_telegram["EQUIPMENT_IDENTIFIER_ELECTRICITY"])
+        .tag("equipment_id", parsed_telegram["EQUIPMENT_IDENTIFIER"])
     )
     for key in [
         "CURRENT_ELECTRICITY_USAGE",
