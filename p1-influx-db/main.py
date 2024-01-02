@@ -3,7 +3,7 @@ from dsmr_parser.clients import SerialReader, SERIAL_SETTINGS_V5
 
 
 serial_reader = SerialReader(
-    device='/dev/ttyUSB0',
+    device='/dev/serial0',
     serial_settings=SERIAL_SETTINGS_V5,
     telegram_specification=telegram_specifications.V5
 )
