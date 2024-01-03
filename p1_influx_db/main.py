@@ -13,10 +13,12 @@ serial_reader = SerialReader(
     telegram_specification=telegram_specifications.V5,
 )
 
+logging.info("Opening InfluxDBClient")
 with influxdb_client.InfluxDBClient.from_config_file(
-    "./p1_influx_db/config.toml", debug=True
+    "./p1_influx_db/config.toml"
 ) as client:
     for telegram in serial_reader.read_as_object():
+        logging.info("Parsing telegram")
         parsed_telegram = json.loads(telegram.to_json())
 
         p_elect = (
@@ -73,6 +75,8 @@ with influxdb_client.InfluxDBClient.from_config_file(
             p_gas.field(
                 "hourly", parsed_telegram["HOURLY_GAS_METER_READING"]["value"]
             ).time(parsed_telegram["HOURLY_GAS_METER_READING"]["datetime"])
+
+        logging.info("Writing to influxdb")
         with client.write_api(write_options=SYNCHRONOUS) as writer:
             writer.write(bucket="latest_energy", record=p_elect)
             writer.write(bucket="latest_energy_current", record=p_elect_current)
