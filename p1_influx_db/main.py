@@ -6,17 +6,8 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 import logging
 import json
 
-# bucket = "<my-bucket>"
-# org = "<my-org>"
-# token = "<my-token>"
-# # Store the URL of your InfluxDB instance
-# url=
-
-# client = influxdb_client.InfluxDBClient(
-#    url=url,
-#    token=token,
-#    org=org
-# )
+logging.info("Connecting to InfluxDB")
+client = influxdb_client.InfluxDBClient.from_config_file("./config.toml")
 
 
 serial_reader = SerialReader(
