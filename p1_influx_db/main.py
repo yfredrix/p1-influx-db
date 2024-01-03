@@ -13,7 +13,9 @@ serial_reader = SerialReader(
     telegram_specification=telegram_specifications.V5,
 )
 
-with influxdb_client.InfluxDBClient.from_config_file("./config.toml") as client:
+with influxdb_client.InfluxDBClient.from_config_file(
+    "./config.toml", config_name="influx2"
+) as client:
     for telegram in serial_reader.read_as_object():
         parsed_telegram = json.loads(telegram.to_json())
 
