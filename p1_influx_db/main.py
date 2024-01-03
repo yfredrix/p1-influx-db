@@ -2,9 +2,15 @@ from dsmr_parser import telegram_specifications
 from dsmr_parser.clients import SerialReader, SERIAL_SETTINGS_V5
 import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
+from systemd.journal import JournaldLogHandler
 
 import logging
 import json
+
+logger = logging.getLogger(__name__)
+journald_handler = JournaldLogHandler()
+journald_handler.setFormatter(logging.Formatter("[%(levelname)s] %(message)s"))
+logger.addHandler(journald_handler)
 
 logging.info("Opening SerialReader")
 serial_reader = SerialReader(
