@@ -17,6 +17,7 @@ for telegram in serial_reader.read_as_object():
     logger.info("Parsing telegram")
     parsed_telegram = json.loads(telegram.to_json())
 
+    logger.info("Data to write:")
     p_elect = (
         influxdb_client.Point("electricity")
         .tag("unit", "kWh")
@@ -110,6 +111,12 @@ for telegram in serial_reader.read_as_object():
         p_gas.field(
             "hourly", parsed_telegram["HOURLY_GAS_METER_READING"]["value"]
         ).time(parsed_telegram["HOURLY_GAS_METER_READING"]["datetime"])
+
+    logger.debug("Energy: " + str(p_elect.to_line_protocol()))
+    logger.debug("Flow: " + str(p_elect_flow.to_line_protocol()))
+    logger.debug("Voltage: " + str(p_voltage.to_line_protocol()))
+    logger.debug("Current: " + str(p_current.to_line_protocol()))
+    logger.debug("Gas: " + str(p_gas.to_line_protocol()))
 
     logger.info("Opening InfluxDBClient")
     with influxdb_client.InfluxDBClient.from_config_file(
