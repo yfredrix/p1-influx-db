@@ -142,7 +142,7 @@ async def main(config_file="./p1_influx_db/config.toml"):
         serial_settings=SERIAL_SETTINGS_V5,
         telegram_specification=telegram_specifications.V5,
     )
-    serial_reader.read_as_object(queue)
+    await serial_reader.read_as_object(queue)
 
     for i in range(3):
         asyncio.create_task(
