@@ -3,10 +3,10 @@ from dsmr_parser.clients import SerialReader, SERIAL_SETTINGS_V5
 import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
 
-import logging
+from loguru import logger
 import json
 
-logging.info("Opening SerialReader")
+logger.info("Opening SerialReader")
 serial_reader = SerialReader(
     device="/dev/serial0",
     serial_settings=SERIAL_SETTINGS_V5,
@@ -14,7 +14,7 @@ serial_reader = SerialReader(
 )
 
 for telegram in serial_reader.read_as_object():
-    logging.info("Parsing telegram")
+    logger.info("Parsing telegram")
     parsed_telegram = json.loads(telegram.to_json())
 
     p_elect = (
@@ -29,10 +29,10 @@ for telegram in serial_reader.read_as_object():
         "ELECTRICITY_DELIVERED_TARIFF_2",
     ]:
         if key not in parsed_telegram:
-            logging.error("Key not in telegram")
+            logger.error("Key not in telegram")
             continue
         if parsed_telegram[key]["unit"] != "kWh":
-            logging.error("Unit is not kWh")
+            logger.error("Unit is not kWh")
             continue
         p_elect.field(key.lower(), parsed_telegram[key]["value"])
     p_elect.time(parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"])
@@ -54,10 +54,10 @@ for telegram in serial_reader.read_as_object():
         "INSTANTANEOUS_ACTIVE_POWER_L3_NEGATIVE",
     ]:
         if key not in parsed_telegram:
-            logging.error("Key not in telegram")
+            logger.error("Key not in telegram")
             continue
         if parsed_telegram[key]["unit"] != "kW":
-            logging.error("Unit is not kW")
+            logger.error("Unit is not kW")
             continue
         p_elect_flow.field(key.lower(), parsed_telegram[key]["value"])
     p_elect_flow.time(parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"])
@@ -73,10 +73,10 @@ for telegram in serial_reader.read_as_object():
         "INSTANTANEOUS_VOLTAGE_L3",
     ]:
         if key not in parsed_telegram:
-            logging.error("Key not in telegram")
+            logger.error("Key not in telegram")
             continue
         if parsed_telegram[key]["unit"] != "V":
-            logging.error("Unit is not V")
+            logger.error("Unit is not V")
             continue
         p_voltage.field(key.lower(), parsed_telegram[key]["value"])
     p_voltage.time(parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"])
@@ -93,10 +93,10 @@ for telegram in serial_reader.read_as_object():
         "INSTANTANEOUS_CURRENT_L3",
     ]:
         if key not in parsed_telegram:
-            logging.error("Key not in telegram")
+            logger.error("Key not in telegram")
             continue
         if parsed_telegram[key]["unit"] != "A":
-            logging.error("Unit is not A")
+            logger.error("Unit is not A")
             continue
         p_current.field(key.lower(), parsed_telegram[key]["value"])
     p_current.time(parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"])
@@ -111,11 +111,11 @@ for telegram in serial_reader.read_as_object():
             "hourly", parsed_telegram["HOURLY_GAS_METER_READING"]["value"]
         ).time(parsed_telegram["HOURLY_GAS_METER_READING"]["datetime"])
 
-    logging.info("Opening InfluxDBClient")
+    logger.info("Opening InfluxDBClient")
     with influxdb_client.InfluxDBClient.from_config_file(
         "./p1_influx_db/config.toml"
     ) as client:
-        logging.info("Writing to influxdb")
+        logger.info("Writing to influxdb")
         with client.write_api(write_options=SYNCHRONOUS) as writer:
             writer.write(bucket="latest_energy", record=p_elect)
             writer.write(bucket="latest_energy_current", record=p_elect_flow)
