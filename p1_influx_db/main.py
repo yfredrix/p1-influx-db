@@ -3,7 +3,6 @@ from dsmr_parser import telegram_specifications
 from dsmr_parser.clients import AsyncSerialReader, SERIAL_SETTINGS_V5
 import influxdb_client
 from influxdb_client.client.influxdb_client_async import InfluxDBClientAsync
-from influxdb_client.client.write_api import SYNCHRONOUS
 
 from loguru import logger
 import json
