@@ -129,7 +129,7 @@ async def parse_telegram_influx(name, queue: asyncio.Queue, config_file: str):
                 ("latest_gas", p_gas),
             ]:
                 writetasks.append(write_api.write(bucket=item[0], record=item[1]))
-            await asyncio.gather(*writetasks)
+            await asyncio.gather(*writetasks, True)
         queue.task_done()
 
 
@@ -141,13 +141,15 @@ async def main(config_file="./p1_influx_db/config.toml"):
         serial_settings=SERIAL_SETTINGS_V5,
         telegram_specification=telegram_specifications.V5,
     )
-
+    tasks = []
     for i in range(3):
-        asyncio.create_task(
-            parse_telegram_influx(f"worker-{i}", queue, config_file=config_file)
+        tasks.append(
+            asyncio.create_task(
+                parse_telegram_influx(f"worker-{i}", queue, config_file=config_file)
+            )
         )
     await serial_reader.read_as_object(queue)
-
+    await asyncio.gather(*tasks, True)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
