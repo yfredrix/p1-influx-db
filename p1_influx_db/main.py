@@ -4,6 +4,8 @@ from dsmr_parser.clients import AsyncSerialReader, SERIAL_SETTINGS_V5
 import influxdb_client
 from influxdb_client.client.influxdb_client_async import InfluxDBClientAsync
 
+from aiohttp.client_exceptions import ClientConnectorError
+
 from loguru import logger
 import json
 import asyncio
@@ -115,21 +117,33 @@ async def parse_telegram_influx(name, queue: asyncio.Queue, config_file: str):
         logger.debug("Voltage: " + str(p_voltage.to_line_protocol()))
         logger.debug("Current: " + str(p_current.to_line_protocol()))
         logger.debug("Gas: " + str(p_gas.to_line_protocol()))
-
+        info_list = [
+            ("latest_energy", p_elect),
+            ("latest_energy_current", p_elect_flow),
+            ("latest_voltage_current", p_voltage),
+            ("latest_voltage_current", p_current),
+            ("latest_gas", p_gas),
+        ]
         logger.info("Opening InfluxDBClient")
         async with InfluxDBClientAsync.from_config_file(config_file) as client:
             logger.info("Writing to influxdb")
             write_api = client.write_api()
             writetasks = []
-            for item in [
-                ("latest_energy", p_elect),
-                ("latest_energy_current", p_elect_flow),
-                ("latest_voltage_current", p_voltage),
-                ("latest_voltage_current", p_current),
-                ("latest_gas", p_gas),
-            ]:
+            for item in info_list:
                 writetasks.append(write_api.write(bucket=item[0], record=item[1]))
-            await asyncio.gather(*writetasks, True)
+            results = await asyncio.gather(*writetasks, True)
+
+        for bucket_info, result in enumerate(zip(info_list, results)):
+            if isinstance(result, influxdb_client.client.write_api.WriteError):
+                logger.error(
+                    f"Error writing to bucket {bucket_info[0]}: {result.error}"
+                )
+                raise result
+            elif isinstance(result, ClientConnectorError):
+                logger.error(f"Error connecting to influxdb: {result}")
+                raise result
+            else:
+                logger.info(f"Writing to bucket {result[0][0]} succeeded")
         queue.task_done()
 
 
@@ -149,7 +163,14 @@ async def main(config_file="./p1_influx_db/config.toml"):
             )
         )
     await serial_reader.read_as_object(queue)
-    await asyncio.gather(*tasks, True)
+    result = await asyncio.gather(*tasks, True)
+    for task in result:
+        if isinstance(task, Exception):
+            logger.error(f"Task result: {task}")
+            raise task
+        elif isinstance(task, ClientConnectorError):
+            raise task
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
