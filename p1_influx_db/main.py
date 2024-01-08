@@ -157,20 +157,19 @@ async def main(config_file="./p1_influx_db/config.toml"):
     )
     tasks = []
     for i in range(3):
-        task.append(
+        tasks.append(
             asyncio.create_task(
                 parse_telegram_influx(f"worker-{i}", queue, config_file=config_file)
             )
         )
-    
+
     await serial_reader.read_as_object(queue)
     result = await asyncio.gather(*tasks, return_exceptions=True)
-    for task in result:
-        if isinstance(task, Exception):
-            logger.error(f"Task result: {task}")
-            raise task
-        elif isinstance(task, ClientConnectorError):
-            raise task
+    for r in result:
+        if isinstance(r, ClientConnectorError):
+            raise r
+        elif isinstance(r, Exception):
+            raise r
 
 
 if __name__ == "__main__":
