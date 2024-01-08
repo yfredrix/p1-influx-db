@@ -134,13 +134,13 @@ async def parse_telegram_influx(name, queue: asyncio.Queue, config_file: str):
             results = await asyncio.gather(*writetasks, True)
 
         for bucket_info, result in enumerate(zip(info_list, results)):
-            if isinstance(result, influxdb_client.client.write_api.WriteError):
-                logger.error(
-                    f"Error writing to bucket {bucket_info[0]}: {result.error}"
-                )
-                raise result
-            elif isinstance(result, ClientConnectorError):
+            if isinstance(result, ClientConnectorError):
                 logger.error(f"Error connecting to influxdb: {result}")
+                raise result
+            elif isinstance(result, Exception):
+                logger.error(
+                    f"Error writing to bucket {bucket_info[0]}: {result.with_traceback()}"
+                )
                 raise result
             else:
                 logger.info(f"Writing to bucket {result[0][0]} succeeded")
@@ -163,13 +163,7 @@ async def main(config_file="./p1_influx_db/config.toml"):
             )
         )
     await serial_reader.read_as_object(queue)
-    result = await asyncio.gather(*tasks, True)
-    for task in result:
-        if isinstance(task, Exception):
-            logger.error(f"Task result: {task}")
-            raise task
-        elif isinstance(task, ClientConnectorError):
-            raise task
+    await asyncio.gather(*tasks)
 
 
 if __name__ == "__main__":
