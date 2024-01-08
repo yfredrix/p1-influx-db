@@ -155,15 +155,11 @@ async def main(config_file="./p1_influx_db/config.toml"):
         serial_settings=SERIAL_SETTINGS_V5,
         telegram_specification=telegram_specifications.V5,
     )
-    tasks = []
     for i in range(3):
-        tasks.append(
-            asyncio.create_task(
-                parse_telegram_influx(f"worker-{i}", queue, config_file=config_file)
-            )
+        asyncio.create_task(
+            parse_telegram_influx(f"worker-{i}", queue, config_file=config_file)
         )
     await serial_reader.read_as_object(queue)
-    await asyncio.gather(*tasks)
 
 
 if __name__ == "__main__":
