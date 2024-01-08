@@ -132,7 +132,7 @@ async def parse_telegram_influx(name, queue: asyncio.Queue, config_file: str):
             for item in info_list:
                 writetasks.append(write_api.write(bucket=item[0], record=item[1]))
 
-            results = await asyncio.gather(*writetasks, True)
+            results = await asyncio.gather(*writetasks, return_exceptions=True)
             for bucket_info, result in enumerate(zip(info_list, results)):
                 if isinstance(result, ClientConnectorError):
                     logger.error(f"Error connecting to influxdb: {result}")
