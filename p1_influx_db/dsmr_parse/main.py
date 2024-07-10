@@ -1,127 +1,176 @@
-from calendar import c
-from collections import namedtuple
 from loguru import logger
+from typing import Dict, List
 import json
+
+from .formats import dsmrMessages, p1Messages
+
+
+def fill_fields(
+    parsed_telegram: Dict[str, any],
+    keylist: List[str],
+    message: p1Messages,
+    p1MessageList: List[p1Messages],
+    unitCheck: str,
+    topic: str,
+):
+    """
+    Fill the fields of the message with values from the parsed telegram.
+
+    Args:
+        parsed_telegram (Dict[str, any]): The parsed telegram containing key-value pairs.
+        keylist (List[str]): The list of keys to be filled in the message fields.
+        message (p1Messages): The message object to be filled.
+        p1MessageList (List[p1Messages]): The list of message objects.
+
+    Returns:
+        List[p1Messages]: The updated list of message objects.
+    """
+    for key in keylist:
+        if key not in parsed_telegram:
+            logger.error("Key not in telegram")
+            continue
+        if parsed_telegram[key]["unit"] != unitCheck:
+            logger.critical(f"Unit is not {unitCheck}")
+            return p1MessageList
+        message["fields"][key.lower()] = parsed_telegram[key]["value"]
+    if list(dict(message)["fields"].keys()):
+        p1MessageList.append(dsmrMessages(topic=topic, payload=message))
+    return p1MessageList
 
 
 def parse_dsmr_telegram(telegram):
+    """
+    Parses a DSMR telegram and returns a list of dsmrMessages.
+
+    Args:
+        telegram (Telegram): The DSMR telegram to parse.
+
+    Returns:
+        list: A list of dsmrMessages containing the parsed data.
+
+    """
     logger.info("Parsing telegram")
     parsed_telegram = json.loads(telegram.to_json())
     logger.info("Data to write:")
-    electricity_measurement = {
-        "measurement": "electricity",
-        "tags": {
-            "unit": "kWh",
-            "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"],
-        },
-        "fields": {},
-        "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
-    }
-    for key in [
-        "ELECTRICITY_USED_TARIFF_1",
-        "ELECTRICITY_USED_TARIFF_2",
-        "ELECTRICITY_DELIVERED_TARIFF_1",
-        "ELECTRICITY_DELIVERED_TARIFF_2",
-    ]:
-        if key not in parsed_telegram:
-            logger.error("Key not in telegram")
-            continue
-        if parsed_telegram[key]["unit"] != "kWh":
-            logger.error("Unit is not kWh")
-            continue
-        electricity_measurement["fields"][key.lower()] = parsed_telegram[key]["value"]
+    p1MessageList = []
+    electricity_measurement = p1Messages(
+        {
+            "measurement": "electricity",
+            "tags": {
+                "unit": "kWh",
+                "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"],
+            },
+            "fields": {},
+            "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
+        }
+    )
+    p1MessageList = fill_fields(
+        parsed_telegram,
+        [
+            "ELECTRICITY_USED_TARIFF_1",
+            "ELECTRICITY_USED_TARIFF_2",
+            "ELECTRICITY_DELIVERED_TARIFF_1",
+            "ELECTRICITY_DELIVERED_TARIFF_2",
+        ],
+        electricity_measurement,
+        "kWh",
+        "latest_energy",
+    )
 
-    electricity_flow = {
-        "measurement": "electricity_current",
-        "tags": {
-            "unit": "kW",
-            "actief_tarief": parsed_telegram["ELECTRICITY_ACTIVE_TARIFF"]["value"],
-            "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"],
-        },
-        "fields": {},
-        "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
-    }
-    for key in [
-        "CURRENT_ELECTRICITY_USAGE",
-        "CURRENT_ELECTRICITY_DELIVERY",
-        "INSTANTANEOUS_ACTIVE_POWER_L1_POSITIVE",
-        "INSTANTANEOUS_ACTIVE_POWER_L2_POSITIVE",
-        "INSTANTANEOUS_ACTIVE_POWER_L3_POSITIVE",
-        "INSTANTANEOUS_ACTIVE_POWER_L1_NEGATIVE",
-        "INSTANTANEOUS_ACTIVE_POWER_L2_NEGATIVE",
-        "INSTANTANEOUS_ACTIVE_POWER_L3_NEGATIVE",
-    ]:
-        if key not in parsed_telegram:
-            logger.error("Key not in telegram")
-            continue
-        if parsed_telegram[key]["unit"] != "kW":
-            logger.error("Unit is not kW")
-            continue
-        electricity_flow["fields"][key.lower()] = parsed_telegram[key]["value"]
+    electricity_flow = p1Messages(
+        {
+            "measurement": "electricity_current",
+            "tags": {
+                "unit": "kW",
+                "actief_tarief": parsed_telegram["ELECTRICITY_ACTIVE_TARIFF"]["value"],
+                "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"],
+            },
+            "fields": {},
+            "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
+        }
+    )
+    p1MessageList = fill_fields(
+        parsed_telegram,
+        [
+            "CURRENT_ELECTRICITY_USAGE",
+            "CURRENT_ELECTRICITY_DELIVERY",
+            "INSTANTANEOUS_ACTIVE_POWER_L1_POSITIVE",
+            "INSTANTANEOUS_ACTIVE_POWER_L2_POSITIVE",
+            "INSTANTANEOUS_ACTIVE_POWER_L3_POSITIVE",
+            "INSTANTANEOUS_ACTIVE_POWER_L1_NEGATIVE",
+            "INSTANTANEOUS_ACTIVE_POWER_L2_NEGATIVE",
+            "INSTANTANEOUS_ACTIVE_POWER_L3_NEGATIVE",
+        ],
+        electricity_flow,
+        p1MessageList,
+        "kW",
+        "latest_energy_current",
+    )
 
-    voltages = {
-        "measurement": "voltage",
-        "tags": {
-            "unit": "V",
-            "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"],
-        },
-        "fields": {},
-        "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
-    }
-    for key in [
-        "INSTANTANEOUS_VOLTAGE_L1",
-        "INSTANTANEOUS_VOLTAGE_L2",
-        "INSTANTANEOUS_VOLTAGE_L3",
-    ]:
-        if key not in parsed_telegram:
-            logger.error("Key not in telegram")
-            continue
-        if parsed_telegram[key]["unit"] != "V":
-            logger.error("Unit is not V")
-            continue
-        voltages["fields"][key.lower()] = parsed_telegram[key]["value"]
+    voltages = p1Messages(
+        {
+            "measurement": "voltage",
+            "tags": {
+                "unit": "V",
+                "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"],
+            },
+            "fields": {},
+            "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
+        }
+    )
+    p1MessageList = fill_fields(
+        parsed_telegram,
+        [
+            "INSTANTANEOUS_VOLTAGE_L1",
+            "INSTANTANEOUS_VOLTAGE_L2",
+            "INSTANTANEOUS_VOLTAGE_L3",
+        ],
+        voltages,
+        p1MessageList,
+        "V",
+        "latest_voltage_current",
+    )
+    currents = p1Messages(
+        {
+            "measurement": "current",
+            "tags": {
+                "unit": "A",
+                "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"],
+            },
+            "fields": {},
+            "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
+        }
+    )
+    p1MessageList = fill_fields(
+        parsed_telegram,
+        [
+            "INSTANTANEOUS_CURRENT_L1",
+            "INSTANTANEOUS_CURRENT_L2",
+            "INSTANTANEOUS_CURRENT_L3",
+        ],
+        currents,
+        p1MessageList,
+        "A",
+        "latest_voltage_current",
+    )
 
-    currents = {
-        "measurement": "current",
-        "tags": {
-            "unit": "A",
-            "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"],
-        },
-        "fields": {},
-        "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
-    }
-
-    for key in [
-        "INSTANTANEOUS_CURRENT_L1",
-        "INSTANTANEOUS_CURRENT_L2",
-        "INSTANTANEOUS_CURRENT_L3",
-    ]:
-        if key not in parsed_telegram:
-            logger.error("Key not in telegram")
-            continue
-        if parsed_telegram[key]["unit"] != "A":
-            logger.error("Unit is not A")
-            continue
-        currents["fields"][key.lower()] = parsed_telegram[key]["value"]
-
-    gas = {
-        "measurement": "gas",
-        "tags": {
-            "unit": "m3",
-            "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER_GAS"]["value"],
-        },
-        "fields": {},
-        "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
-    }
-    if "HOURLY_GAS_METER_READING" in parsed_telegram:
-        gas["fields"]["hourly"] = parsed_telegram["HOURLY_GAS_METER_READING"]["value"]
-
-    coupledFormat = namedtuple("coupledFormat", ["topic", "payload"])
-    info_list = [
-        coupledFormat(topic="latest_energy", payload=electricity_measurement),
-        coupledFormat(topic="latest_energy_current", payload=electricity_flow),
-        coupledFormat(topic="latest_voltage_current", payload=voltages),
-        coupledFormat(topic="latest_voltage_current", payload=currents),
-        coupledFormat(topic="latest_gas", payload=gas),
-    ]
-    return info_list
+    gas = p1Messages(
+        {
+            "measurement": "gas",
+            "tags": {
+                "unit": "m3",
+                "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER_GAS"]["value"],
+            },
+            "fields": {},
+            "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
+        }
+    )
+    p1MessageList = fill_fields(
+        parsed_telegram,
+        ["HOURLY_GAS_METER_READING"],
+        gas,
+        p1MessageList,
+        "m3",
+        "latest_gas",
+    )
+    return p1MessageList

@@ -1,1 +1,1 @@
-from .publish import publish_parsed_telegram
+from .publish import publish

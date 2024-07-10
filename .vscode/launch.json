@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python Debugger: Module",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "p1_influx_db"
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",

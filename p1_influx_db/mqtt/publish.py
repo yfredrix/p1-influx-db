@@ -1,26 +1,16 @@
-import asyncio
-from math import e
-from typing import NamedTuple
-import aiomqtt
-import json
+from p1_influx_db.dsmr_parse import dsmrMessages
+from paho.mqtt import client as mqtt_client
+from .client import client
+from loguru import logger
 
 
-async def publish(message: NamedTuple, client: aiomqtt.Client):
+def publish(message: dsmrMessages, client: mqtt_client.Client = client):
     topic = message["topic"]
     payload = message["payload"]
-    return client.publish(topic, payload)
+    result = client.publish(topic, payload)
 
-
-async def publish_parsed_telegram(telegram_list):
-    """Publish the parsed telegram to the MQTT broker."""
-
-    async with aiomqtt.Client("test.mosquitto.org") as client:
-        tasks = []
-        for telegram in telegram_list:
-            tasks.append(publish(telegram.topic, json.dumps(telegram.payload)))
-
-        task_results = await asyncio.gather(*tasks, return_exceptions=True)
-        if not any(isinstance(task_results, Exception)):
-            return True
-        else:
-            return False
+    status = result[0]
+    if status == 0:
+        logger.debug(f"Send `{payload}` to topic `{topic}`")
+    else:
+        logger.error(f"Failed to send message to topic {topic}")
