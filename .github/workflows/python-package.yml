@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
     strategy:
@@ -38,14 +38,10 @@ jobs:
       run: |
         poetry run pytest
 
-    - name: Build package
-      run: |
-        python -m poetry build
-
   release:
     runs-on: ubuntu-latest
     concurrency: release
-    needs: build
+    needs: test
     permissions:
       id-token: write
       contents: write
