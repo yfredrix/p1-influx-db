@@ -1,5 +1,39 @@
 # CHANGELOG
 
+## v1.1.0 (2024-07-10)
+
+### Feature
+
+* feat: Update python-package.yml ([`6009701`](https://github.com/yfredrix/p1-influx-db/commit/6009701986b030c70b0e2f4e53f9053c2eb2063e))
+
+### Performance
+
+* perf: Setup CI ([`33e8ffe`](https://github.com/yfredrix/p1-influx-db/commit/33e8ffe6ef57acd1eabba82d4e8082b694097728))
+
+### Unknown
+
+* Feat: Added CI pipeline
+
+Create python-package.yml ([`33814a1`](https://github.com/yfredrix/p1-influx-db/commit/33814a1b33ffcbc4d85627166d998eac1f6db8de))
+
+* Merge branch &#39;yfredrix-patch-1&#39; of https://github.com/yfredrix/p1-influx-db into yfredrix-patch-1 ([`5597cc6`](https://github.com/yfredrix/p1-influx-db/commit/5597cc6cf6e0a0d9d88afc36dd97457da5c7ed0f))
+
+* Added dependencies and pyproject ([`9d6e1d7`](https://github.com/yfredrix/p1-influx-db/commit/9d6e1d7e11e1567478b702a3eb68b1145c49d315))
+
+* Added fake test ([`e01a4f2`](https://github.com/yfredrix/p1-influx-db/commit/e01a4f2a3638651854488700263bf13ca8b46e76))
+
+* Shorter line length ([`8db9f3b`](https://github.com/yfredrix/p1-influx-db/commit/8db9f3b0f62dff7746ce76120b0cd5e9f259b53e))
+
+* Update python-package.yml ([`ce92de7`](https://github.com/yfredrix/p1-influx-db/commit/ce92de724a29014752d6d88f07b0c37769615100))
+
+* Update python-package.yml ([`4ea413c`](https://github.com/yfredrix/p1-influx-db/commit/4ea413ce08ce91564f205f0802b4e4be5f2dc13a))
+
+* Update python-package.yml ([`03116ea`](https://github.com/yfredrix/p1-influx-db/commit/03116eaa6bc2908d5f2fbcbb44aed5de1f050d33))
+
+* Update python-package.yml ([`0bee1b1`](https://github.com/yfredrix/p1-influx-db/commit/0bee1b16b3525d17b9af0a57814beb3504604a44))
+
+* Create python-package.yml ([`39caf40`](https://github.com/yfredrix/p1-influx-db/commit/39caf40b9ffc1f19d079b25edb5d3990771d28ec))
+
 ## v1.0.0 (2024-06-19)
 
 ## v0.0.0 (2024-06-19)
