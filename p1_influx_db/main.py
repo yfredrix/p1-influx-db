@@ -108,9 +108,9 @@ async def parse_telegram_influx(name, queue: asyncio.Queue, config_file: str):
             .tag("equipment_id", parsed_telegram["EQUIPMENT_IDENTIFIER_GAS"]["value"])
         )
         if "HOURLY_GAS_METER_READING" in parsed_telegram:
-            p_gas.field(
-                "hourly", parsed_telegram["HOURLY_GAS_METER_READING"]["value"]
-            ).time(parsed_telegram["HOURLY_GAS_METER_READING"]["datetime"])
+            p_gas.field("hourly", parsed_telegram["HOURLY_GAS_METER_READING"]["value"]).time(
+                parsed_telegram["HOURLY_GAS_METER_READING"]["datetime"]
+            )
 
         logger.debug("Energy: " + str(p_elect.to_line_protocol()))
         logger.debug("Flow: " + str(p_elect_flow.to_line_protocol()))
@@ -138,9 +138,7 @@ async def parse_telegram_influx(name, queue: asyncio.Queue, config_file: str):
                     logger.error(f"Error connecting to influxdb: {result}")
                     raise result
                 elif isinstance(result, Exception):
-                    logger.error(
-                        f"Error writing to bucket {bucket_info[0]}: {result.with_traceback()}"
-                    )
+                    logger.error(f"Error writing to bucket {bucket_info[0]}: {result.with_traceback()}")
                     raise result
                 else:
                     logger.info(f"Writing to bucket {result[0][0]} succeeded")
@@ -157,11 +155,7 @@ async def main(config_file="./p1_influx_db/config.toml"):
     )
     tasks = []
     for i in range(3):
-        tasks.append(
-            asyncio.create_task(
-                parse_telegram_influx(f"worker-{i}", queue, config_file=config_file)
-            )
-        )
+        tasks.append(asyncio.create_task(parse_telegram_influx(f"worker-{i}", queue, config_file=config_file)))
 
     await serial_reader.read_as_object(queue)
     result = await asyncio.gather(*tasks, return_exceptions=True)
