@@ -1,0 +1,77 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python package
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install poetry
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f pyproject.toml ]; then poetry install; fi
+    - name: Lint with black
+      run: |
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        python -m poetry run black . --check --line-length=127
+    - name: Test with pytest
+      run: |
+        poetry run pytest
+
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    concurrency: release
+    needs: test
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Python Semantic Release
+      uses: python-semantic-release/python-semantic-release@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Build package
+      run: |
+        python -m poetry build
+        
+    - name: Python auto-release (PyPI & GitHub)
+      # You may pin to the exact commit or the version.
+      # uses: etils-actions/pypi-auto-publish@485c06f78cf81532b987ea00bfbfd0e59ac6fdfe
+      uses: etils-actions/pypi-auto-publish@v1.5.2
+      with:
+        # Token of the PyPI account publishing the project. If missing, PyPI release is skipped.
+        pypi-token: ${{ secrets.PYPI_TOKEN }}
+        # Parse the `CHANGELOG.md` (`keep a changelog` format).
+        parse-changelog: CHANGELOG.md# optional
+        # Name of the PyPI package (optional).
+        pkg-name: p1-influx-db# optional
+        # Root directory of the project (containing the `pyproject.toml`).
+        path: . # optional, default is .
+              
