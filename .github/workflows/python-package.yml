@@ -43,9 +43,11 @@ jobs:
     runs-on: ubuntu-latest
     concurrency: release
     needs: test
+    environment: release
     permissions:
       id-token: write
       contents: write
+    
 
     steps:
     - uses: actions/checkout@v3
@@ -69,11 +71,8 @@ jobs:
     - name: Build package
       run: |
         python -m poetry build
-        
-    - name: Python auto-release (PyPI & GitHub)
-      uses: etils-actions/pypi-auto-publish@v1.5.2
-      with:
-        # Token of the PyPI account publishing the project. If missing, PyPI release is skipped.
-        pypi-token: ${{ secrets.PYPI_TOKEN }}
-        parse-changelog: CHANGELOG.md
-              
+    
+    - name: pypi-publish
+      # You may pin to the exact commit or the version.
+      # uses: pypa/gh-action-pypi-publish@ec4db0b4ddc65acdf4bff5fa45ac92d78b56bdf0
+      uses: pypa/gh-action-pypi-publish@v1.9.0
