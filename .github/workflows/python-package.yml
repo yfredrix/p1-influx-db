@@ -71,16 +71,9 @@ jobs:
         python -m poetry build
         
     - name: Python auto-release (PyPI & GitHub)
-      # You may pin to the exact commit or the version.
-      # uses: etils-actions/pypi-auto-publish@485c06f78cf81532b987ea00bfbfd0e59ac6fdfe
       uses: etils-actions/pypi-auto-publish@v1.5.2
       with:
         # Token of the PyPI account publishing the project. If missing, PyPI release is skipped.
         pypi-token: ${{ secrets.PYPI_TOKEN }}
-        # Parse the `CHANGELOG.md` (`keep a changelog` format).
-        parse-changelog: CHANGELOG.md# optional
-        # Name of the PyPI package (optional).
-        pkg-name: p1-influx-db# optional
-        # Root directory of the project (containing the `pyproject.toml`).
-        path: . # optional, default is .
+        parse-changelog: CHANGELOG.md
               
