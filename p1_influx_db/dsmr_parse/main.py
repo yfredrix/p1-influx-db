@@ -59,10 +59,10 @@ def parse_dsmr_telegram(telegram: Telegram):
         measurement="electricity",
         tags={
             "unit": "kWh",
-            "equipment_id": telegram["EQUIPMENT_IDENTIFIER"]["value"],
+            "equipment_id": telegram.EQUIPMENT_IDENTIFIER,
         },
         fields={},
-        time=telegram["P1_MESSAGE_TIMESTAMP"]["value"],
+        time=telegram.P1_MESSAGE_TIMESTAMP,
     )
     p1MessageList = fill_fields(
         telegram,
