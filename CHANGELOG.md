@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v1.3.0 (2024-07-20)
+
+### Feature
+
+* feat: Update pyproject.toml to include pydantic version 2.8.2
+
+The code changes in the pyproject.toml file add the pydantic package with version 2.8.2 to the project&#39;s dependencies. This update is necessary to ensure compatibility with the latest version of pydantic and to leverage its features in the codebase. ([`45322c3`](https://github.com/yfredrix/p1-influx-db/commit/45322c3a5a92dbee288b02aeef2146127aac6c53))
+
 ## v1.2.0 (2024-07-20)
 
 ### Chore
