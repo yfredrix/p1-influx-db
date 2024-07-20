@@ -1681,4 +1681,4 @@ publishmethods = ["influxdb-client", "paho-mqtt"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "a9ce5fca3a40eadf5056c0e29c51010f85cc1af9ab939bdcfc93f3440c3ce52f"
+content-hash = "5e254f7b5ff36e0e2a69bf6e3856ff65f6e487ec0f1a7498d7827e2694dbc19f"
