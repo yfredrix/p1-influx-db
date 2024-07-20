@@ -20,12 +20,6 @@ class MqttClient(mqtt.Client):
         )
         self.username_pw_set(username=client_id, password=client_password)
 
-    def on_publish(self, userdata, mid, reason_code, properties):
-        try:
-            userdata.remove(mid)
-        except KeyError:
-            logger.error("Race condition occured as such mid is missing")
-
     def start(self):
         self.connect(self.broker, self.port)
         self.loop_start()
@@ -36,9 +30,10 @@ class MqttClient(mqtt.Client):
     def publish_messages(self, message: dsmrMessages):
         topic = message.topic
         payload = message.payload.model_dump_json()
-        result = self.publish(topic, payload)
+        messageInfo = self.publish(f"p1/{topic}", payload, retain=True)
+        messageInfo.wait_for_publish(10)
 
-        status = result[0]
+        status = messageInfo.rc
         if status == 0:
             logger.debug(f"Send `{payload}` to topic `{topic}`")
         else:
