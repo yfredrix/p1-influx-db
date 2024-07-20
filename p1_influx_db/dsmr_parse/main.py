@@ -1,5 +1,8 @@
 from loguru import logger
 from typing import Dict, List
+
+from dsmr_parser.objects import Telegram
+
 import json
 
 from .formats import dsmrMessages, p1Messages
@@ -25,6 +28,7 @@ def fill_fields(
     Returns:
         List[p1Messages]: The updated list of message objects.
     """
+    message = message.model_dump()
     for key in keylist:
         if key not in parsed_telegram:
             logger.error("Key not in telegram")
@@ -34,11 +38,11 @@ def fill_fields(
             return p1MessageList
         message["fields"][key.lower()] = parsed_telegram[key]["value"]
     if list(dict(message)["fields"].keys()):
-        p1MessageList.append(dsmrMessages(topic=topic, payload=message))
+        p1MessageList.append(dsmrMessages(topic=topic, payload=p1Messages(**message)))
     return p1MessageList
 
 
-def parse_dsmr_telegram(telegram):
+def parse_dsmr_telegram(telegram: Telegram):
     """
     Parses a DSMR telegram and returns a list of dsmrMessages.
 
@@ -49,23 +53,19 @@ def parse_dsmr_telegram(telegram):
         list: A list of dsmrMessages containing the parsed data.
 
     """
-    logger.info("Parsing telegram")
-    parsed_telegram = json.loads(telegram.to_json())
     logger.info("Data to write:")
     p1MessageList = []
     electricity_measurement = p1Messages(
-        {
-            "measurement": "electricity",
-            "tags": {
-                "unit": "kWh",
-                "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"],
-            },
-            "fields": {},
-            "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
-        }
+        measurement="electricity",
+        tags={
+            "unit": "kWh",
+            "equipment_id": telegram["EQUIPMENT_IDENTIFIER"]["value"],
+        },
+        fields={},
+        time=telegram["P1_MESSAGE_TIMESTAMP"]["value"],
     )
     p1MessageList = fill_fields(
-        parsed_telegram,
+        telegram,
         [
             "ELECTRICITY_USED_TARIFF_1",
             "ELECTRICITY_USED_TARIFF_2",
@@ -73,24 +73,23 @@ def parse_dsmr_telegram(telegram):
             "ELECTRICITY_DELIVERED_TARIFF_2",
         ],
         electricity_measurement,
+        p1MessageList,
         "kWh",
         "latest_energy",
     )
 
     electricity_flow = p1Messages(
-        {
-            "measurement": "electricity_current",
-            "tags": {
-                "unit": "kW",
-                "actief_tarief": parsed_telegram["ELECTRICITY_ACTIVE_TARIFF"]["value"],
-                "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"],
-            },
-            "fields": {},
-            "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
-        }
+        measurement="electricity_current",
+        tags={
+            "unit": "kW",
+            "actief_tarief": telegram["ELECTRICITY_ACTIVE_TARIFF"]["value"],
+            "equipment_id": telegram["EQUIPMENT_IDENTIFIER"]["value"],
+        },
+        fields={},
+        time=telegram["P1_MESSAGE_TIMESTAMP"]["value"],
     )
     p1MessageList = fill_fields(
-        parsed_telegram,
+        telegram,
         [
             "CURRENT_ELECTRICITY_USAGE",
             "CURRENT_ELECTRICITY_DELIVERY",
@@ -108,18 +107,16 @@ def parse_dsmr_telegram(telegram):
     )
 
     voltages = p1Messages(
-        {
-            "measurement": "voltage",
-            "tags": {
-                "unit": "V",
-                "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"],
-            },
-            "fields": {},
-            "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
-        }
+        measurement="voltage",
+        tags={
+            "unit": "V",
+            "equipment_id": telegram["EQUIPMENT_IDENTIFIER"]["value"],
+        },
+        fields={},
+        time=telegram["P1_MESSAGE_TIMESTAMP"]["value"],
     )
     p1MessageList = fill_fields(
-        parsed_telegram,
+        telegram,
         [
             "INSTANTANEOUS_VOLTAGE_L1",
             "INSTANTANEOUS_VOLTAGE_L2",
@@ -131,18 +128,16 @@ def parse_dsmr_telegram(telegram):
         "latest_voltage_current",
     )
     currents = p1Messages(
-        {
-            "measurement": "current",
-            "tags": {
-                "unit": "A",
-                "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER"]["value"],
-            },
-            "fields": {},
-            "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
-        }
+        measurement="current",
+        tags={
+            "unit": "A",
+            "equipment_id": telegram["EQUIPMENT_IDENTIFIER"]["value"],
+        },
+        fields={},
+        time=telegram["P1_MESSAGE_TIMESTAMP"]["value"],
     )
     p1MessageList = fill_fields(
-        parsed_telegram,
+        telegram,
         [
             "INSTANTANEOUS_CURRENT_L1",
             "INSTANTANEOUS_CURRENT_L2",
@@ -155,18 +150,16 @@ def parse_dsmr_telegram(telegram):
     )
 
     gas = p1Messages(
-        {
-            "measurement": "gas",
-            "tags": {
-                "unit": "m3",
-                "equipment_id": parsed_telegram["EQUIPMENT_IDENTIFIER_GAS"]["value"],
-            },
-            "fields": {},
-            "time": parsed_telegram["P1_MESSAGE_TIMESTAMP"]["value"],
-        }
+        measurement="gas",
+        tags={
+            "unit": "m3",
+            "equipment_id": telegram["EQUIPMENT_IDENTIFIER_GAS"]["value"],
+        },
+        fields={},
+        time=telegram["P1_MESSAGE_TIMESTAMP"]["value"],
     )
     p1MessageList = fill_fields(
-        parsed_telegram,
+        telegram,
         ["HOURLY_GAS_METER_READING"],
         gas,
         p1MessageList,
