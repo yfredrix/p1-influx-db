@@ -4,6 +4,12 @@
 
 ### Chore
 
+* chore: Update python-package.yml to include Python 3.11 setup and poetry installation
+
+The code changes in the python-package.yml file add the setup for Python 3.11 and the installation of the poetry package manager. This update is necessary to ensure compatibility with the latest Python version and to use poetry for managing dependencies and building the package. ([`208dd89`](https://github.com/yfredrix/p1-influx-db/commit/208dd892e25a0d9fe5d0636e27d8ee3753ba67ea))
+
+* chore: Enable automatic pushing in python-package.yml ([`ac6b89e`](https://github.com/yfredrix/p1-influx-db/commit/ac6b89e4de695cc6804e9afe92fcae4cd37c3154))
+
 * chore: Update pydantic import in formats.py and test_main.py ([`0b6788f`](https://github.com/yfredrix/p1-influx-db/commit/0b6788f74a8cd7cc55490cdc43c6efe21f870b00))
 
 ### Feature
