@@ -1,5 +1,53 @@
 # CHANGELOG
 
+## v1.2.0 (2024-07-20)
+
+### Chore
+
+* chore: Update pydantic import in formats.py and test_main.py ([`0b6788f`](https://github.com/yfredrix/p1-influx-db/commit/0b6788f74a8cd7cc55490cdc43c6efe21f870b00))
+
+### Feature
+
+* feat: Refactor MQTT client and publish functionality
+
+The code changes refactor the MQTT client and publish functionality in the `p1_influx_db` package. The `publish.py` module is removed, and its functionality is now handled by the `MqttClient` class in the `client.py` module. The `mqttmain.py` module is updated to use the new `MqttClient` class for publishing messages. This refactor improves the organization and maintainability of the MQTT functionality in the package. ([`8a31d74`](https://github.com/yfredrix/p1-influx-db/commit/8a31d74eabb44a0b0ebf2ec20817235064c35da4))
+
+* feat: added support for mqtt ([`a527f36`](https://github.com/yfredrix/p1-influx-db/commit/a527f36d139735b4607b61f18232efa3d446607c))
+
+* feat: added support for mqtt ([`3781cc7`](https://github.com/yfredrix/p1-influx-db/commit/3781cc74211000b5e506592682ee21132228694d))
+
+### Refactor
+
+* refactor: Update P1_MESSAGE_TIMESTAMP handling in test_main.py
+
+The code changes refactor the handling of the P1_MESSAGE_TIMESTAMP field in the test_main.py module. Instead of using the datetime function to create a timestamp, the value is now directly assigned as a dictionary value. This refactor improves the readability and maintainability of the code. ([`be59666`](https://github.com/yfredrix/p1-influx-db/commit/be5966680ab3183c0718512ef9543aae3daf3d91))
+
+* refactor: Refactor MQTT client and publish functionality in p1_influx_db package ([`b6f01db`](https://github.com/yfredrix/p1-influx-db/commit/b6f01db637e737478ba6849f6f7affbbc05a10f1))
+
+* refactor: remove unused test_abc function ([`68981ef`](https://github.com/yfredrix/p1-influx-db/commit/68981ef39e2224c91351824e38ecd1cb1a67f1f2))
+
+### Unknown
+
+* Merge pull request #2 from yfredrix/mqtt
+
+Added MQTT support for P1 reader ([`78182ce`](https://github.com/yfredrix/p1-influx-db/commit/78182ce187ca98d16b14e1752905f200aabcace9))
+
+* Merge branch &#39;mqtt&#39; of https://github.com/yfredrix/p1-influx-db into mqtt ([`a6c3601`](https://github.com/yfredrix/p1-influx-db/commit/a6c36013f246c0c3db924c049f0fb615f553c8fe))
+
+* feat sync mqtt ([`3794524`](https://github.com/yfredrix/p1-influx-db/commit/3794524ef7857ab90e967c6411b4455a2bedd288))
+
+* Fixed optional dependencies ([`baea413`](https://github.com/yfredrix/p1-influx-db/commit/baea4132248184bb01b7d7f697bbce162c17040f))
+
+* feat sync mqtt ([`6219df4`](https://github.com/yfredrix/p1-influx-db/commit/6219df4fba42b0737ad28e5afd23fedd28b9f863))
+
+* Fixed optional dependencies ([`45102ed`](https://github.com/yfredrix/p1-influx-db/commit/45102edddde81db1b80f46da24fdc42646960471))
+
+* Update python-package.yml ([`a59768c`](https://github.com/yfredrix/p1-influx-db/commit/a59768cd8d4320de9456f4dd62dcfc47a71346d3))
+
+* Update python-package.yml ([`460fc85`](https://github.com/yfredrix/p1-influx-db/commit/460fc851eb0fa0ff9e5a5219d70ca41ffa85e9cf))
+
+* Update python-package.yml ([`97ead24`](https://github.com/yfredrix/p1-influx-db/commit/97ead24bcd831fdf1d1ec24b8a181771b7546a1d))
+
 ## v1.1.0 (2024-07-10)
 
 ### Feature
