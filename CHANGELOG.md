@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v1.3.4 (2024-07-20)
+
+### Fix
+
+* fix: Remove unused tls_insecure_set attribute in MqttClient
+
+The code changes remove the unused tls_insecure_set attribute in the MqttClient class. This attribute is no longer needed and can be safely removed, improving the code&#39;s cleanliness and reducing unnecessary complexity. ([`2feddc3`](https://github.com/yfredrix/p1-influx-db/commit/2feddc337ca7d266eb36b76ff68ab0c899f3861f))
+
 ## v1.3.3 (2024-07-20)
 
 ### Chore
