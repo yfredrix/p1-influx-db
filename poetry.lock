@@ -550,31 +550,31 @@ files = [
 
 [[package]]
 name = "dsmr-parser"
-version = "1.4.1"
+version = "1.4.2"
 description = "Library to parse Dutch Smart Meter Requirements (DSMR)"
 optional = false
 python-versions = "*"
 files = [
-    {file = "dsmr-parser-1.4.1.tar.gz", hash = "sha256:2f7d7e96ccb8e38f93d611d3af193e50f83f0c1a5facff0e625ab6aa0d63d976"},
-    {file = "dsmr_parser-1.4.1-py3-none-any.whl", hash = "sha256:e49c32f34fdc37885b37ca8084c55f74ae94bf0910dd9f04bf02c98912716aca"},
+    {file = "dsmr-parser-1.4.2.tar.gz", hash = "sha256:52121f2be152fd7235879494e68159832d1408f972625dea7a8241904473b3aa"},
+    {file = "dsmr_parser-1.4.2-py3-none-any.whl", hash = "sha256:385821f66239af1067c19061b4f6e40973a35c140ec636fc78c79e02f9dfde4e"},
 ]
 
 [package.dependencies]
 dlms-cosem = "21.3.2"
 pyserial = ">=3,<4"
-pyserial-asyncio = "<1"
+pyserial-asyncio-fast = ">=0.11"
 pytz = "*"
 Tailer = "0.4.1"
 
 [[package]]
 name = "exceptiongroup"
-version = "1.2.1"
+version = "1.2.2"
 description = "Backport of PEP 654 (exception groups)"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "exceptiongroup-1.2.1-py3-none-any.whl", hash = "sha256:5258b9ed329c5bbdd31a309f53cbfb0b155341807f6ff7606a1e801a891b29ad"},
-    {file = "exceptiongroup-1.2.1.tar.gz", hash = "sha256:a4785e48b045528f5bfe627b6ad554ff32def154f42372786903b7abcfe1aa16"},
+    {file = "exceptiongroup-1.2.2-py3-none-any.whl", hash = "sha256:3111b9d131c238bec2f8f516e123e14ba243563fb135d3fe885990585aa7795b"},
+    {file = "exceptiongroup-1.2.2.tar.gz", hash = "sha256:47c2edf7c6738fafb49fd34290706d1a1a2f4d1c6df275526b62cbb4aa5393cc"},
 ]
 
 [package.extras]
@@ -1025,6 +1025,20 @@ files = [
 ]
 
 [[package]]
+name = "paho-mqtt"
+version = "2.1.0"
+description = "MQTT version 5.0/3.1.1 client class"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "paho_mqtt-2.1.0-py3-none-any.whl", hash = "sha256:6db9ba9b34ed5bc6b6e3812718c7e06e2fd7444540df2455d2c51bd58808feee"},
+    {file = "paho_mqtt-2.1.0.tar.gz", hash = "sha256:12d6e7511d4137555a3f6ea167ae846af2c7357b10bc6fa4f7c3968fc1723834"},
+]
+
+[package.extras]
+proxy = ["pysocks"]
+
+[[package]]
 name = "pathspec"
 version = "0.12.1"
 description = "Utility library for gitignore style pattern matching of file paths."
@@ -1229,14 +1243,14 @@ files = [
 cp2110 = ["hidapi"]
 
 [[package]]
-name = "pyserial-asyncio"
-version = "0.6"
+name = "pyserial-asyncio-fast"
+version = "0.14"
 description = "Python Serial Port Extension - Asynchronous I/O support"
 optional = false
 python-versions = "*"
 files = [
-    {file = "pyserial-asyncio-0.6.tar.gz", hash = "sha256:b6032923e05e9d75ec17a5af9a98429c46d2839adfaf80604d52e0faacd7a32f"},
-    {file = "pyserial_asyncio-0.6-py3-none-any.whl", hash = "sha256:de9337922619421b62b9b1a84048634b3ac520e1d690a674ed246a2af7ce1fc5"},
+    {file = "pyserial-asyncio-fast-0.14.tar.gz", hash = "sha256:09ad7f2886969da3df064e93fd47ceab47ad91144ec80e103c5cf97bb0038908"},
+    {file = "pyserial_asyncio_fast-0.14-py3-none-any.whl", hash = "sha256:38f355cafc03eed4eb4c0177b9c7d3ca5618bca7cd125f44a3131ff98d2843a6"},
 ]
 
 [package.dependencies]
@@ -1280,13 +1294,13 @@ six = ">=1.5"
 
 [[package]]
 name = "python-gitlab"
-version = "4.7.0"
+version = "4.8.0"
 description = "A python wrapper for the GitLab API"
 optional = false
 python-versions = ">=3.8.0"
 files = [
-    {file = "python_gitlab-4.7.0-py3-none-any.whl", hash = "sha256:03f194aa9f538087d141eb5ee6a7d95dc06c8c021ca3c7a116abdf9cae656b12"},
-    {file = "python_gitlab-4.7.0.tar.gz", hash = "sha256:b798cddbd9d166b79571e6d6c97542978d0a395de57169c7097d09210a766a6d"},
+    {file = "python_gitlab-4.8.0-py3-none-any.whl", hash = "sha256:89d7e24ff8fcb2b6845f1379350d0e0cdfbdae42b824bc4fa194c5a7a9a774bc"},
+    {file = "python_gitlab-4.8.0.tar.gz", hash = "sha256:c2c4d7b1cd503d905afe5dfc0f3f6619934361f76ae855c6cec9a666864d37cf"},
 ]
 
 [package.dependencies]
@@ -1299,13 +1313,13 @@ yaml = ["PyYaml (>=6.0.1)"]
 
 [[package]]
 name = "python-semantic-release"
-version = "9.8.5"
+version = "9.8.6"
 description = "Automatic Semantic Versioning for Python projects"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "python_semantic_release-9.8.5-py3-none-any.whl", hash = "sha256:910c8875482ea234fa7e063916fa21431aa761dc1db48fed98487fca62b5030c"},
-    {file = "python_semantic_release-9.8.5.tar.gz", hash = "sha256:47c0f1365db96ccabc3bd7c76b081ac7ca3cdbc4d1f508719e5d7fc4f40e34c7"},
+    {file = "python_semantic_release-9.8.6-py3-none-any.whl", hash = "sha256:018729c09edbb1d4ad8b08af81bc2a42d002d54e37f87ed4b706fa283636ce3f"},
+    {file = "python_semantic_release-9.8.6.tar.gz", hash = "sha256:6e2e4626112bdbf43e86aac4535557e8c0a9274a4ea5352f14623cbabbfe498a"},
 ]
 
 [package.dependencies]
@@ -1409,18 +1423,19 @@ jupyter = ["ipywidgets (>=7.5.1,<9)"]
 
 [[package]]
 name = "setuptools"
-version = "70.3.0"
+version = "71.0.4"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "setuptools-70.3.0-py3-none-any.whl", hash = "sha256:fe384da74336c398e0d956d1cae0669bc02eed936cdb1d49b57de1990dc11ffc"},
-    {file = "setuptools-70.3.0.tar.gz", hash = "sha256:f171bab1dfbc86b132997f26a119f6056a57950d058587841a0082e8830f9dc5"},
+    {file = "setuptools-71.0.4-py3-none-any.whl", hash = "sha256:ed2feca703be3bdbd94e6bb17365d91c6935c6b2a8d0bb09b66a2c435ba0b1a5"},
+    {file = "setuptools-71.0.4.tar.gz", hash = "sha256:48297e5d393a62b7cb2a10b8f76c63a73af933bd809c9e0d0d6352a1a0135dd8"},
 ]
 
 [package.extras]
+core = ["importlib-metadata (>=6)", "importlib-resources (>=5.10.2)", "jaraco.text (>=3.7)", "more-itertools (>=8.8)", "ordered-set (>=3.1.1)", "packaging (>=24)", "platformdirs (>=2.6.2)", "tomli (>=2.0.1)", "wheel (>=0.43.0)"]
 doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "pygments-github-lexers (==0.0.5)", "pyproject-hooks (!=1.1)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-favicon", "sphinx-inline-tabs", "sphinx-lint", "sphinx-notfound-page (>=1,<2)", "sphinx-reredirects", "sphinxcontrib-towncrier"]
-test = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "importlib-metadata", "ini2toml[lite] (>=0.14)", "jaraco.develop (>=7.21)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "jaraco.test", "mypy (==1.10.0)", "packaging (>=23.2)", "pip (>=19.1)", "pyproject-hooks (!=1.1)", "pytest (>=6,!=8.1.*)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-home (>=0.5)", "pytest-mypy", "pytest-perf", "pytest-ruff (>=0.3.2)", "pytest-subprocess", "pytest-timeout", "pytest-xdist (>=3)", "tomli", "tomli-w (>=1.0.0)", "virtualenv (>=13.0.0)", "wheel"]
+test = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "importlib-metadata", "ini2toml[lite] (>=0.14)", "jaraco.develop (>=7.21)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "jaraco.test", "mypy (==1.10.0)", "packaging (>=23.2)", "pip (>=19.1)", "pyproject-hooks (!=1.1)", "pytest (>=6,!=8.1.*)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-home (>=0.5)", "pytest-mypy", "pytest-perf", "pytest-ruff (<0.4)", "pytest-ruff (>=0.2.1)", "pytest-ruff (>=0.3.2)", "pytest-subprocess", "pytest-timeout", "pytest-xdist (>=3)", "tomli", "tomli-w (>=1.0.0)", "virtualenv (>=13.0.0)", "wheel"]
 
 [[package]]
 name = "shellingham"
@@ -1463,6 +1478,17 @@ optional = false
 python-versions = "*"
 files = [
     {file = "tailer-0.4.1.tar.gz", hash = "sha256:78d60f23a1b8a2d32f400b3c8c06b01142ac7841b75d8a1efcb33515877ba531"},
+]
+
+[[package]]
+name = "toml"
+version = "0.10.2"
+description = "Python Library for Tom's Obvious, Minimal Language"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+files = [
+    {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
+    {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
 ]
 
 [[package]]
@@ -1647,7 +1673,12 @@ files = [
 doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
 test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", "jaraco.test", "more-itertools", "pytest (>=6,!=8.1.*)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy", "pytest-ruff (>=0.2.1)"]
 
+[extras]
+influxdb = ["influxdb-client"]
+mqtt = ["paho-mqtt"]
+publishmethods = ["influxdb-client", "paho-mqtt"]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "8cfdfc29ff47928097608d2664478bdc567702e2ab5dfe77bdd7760b47c67a36"
+content-hash = "a9ce5fca3a40eadf5056c0e29c51010f85cc1af9ab939bdcfc93f3440c3ce52f"

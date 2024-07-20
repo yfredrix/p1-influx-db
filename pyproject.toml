@@ -9,7 +9,15 @@ readme = "README.md"
 python = "^3.9"
 dsmr-parser = "^1.3.1"
 loguru = "^0.7.2"
+
 influxdb-client = {extras = ["async"], version = "^1.39.0"}
+paho-mqtt = "^2.1.0"
+toml = "^0.10.2"
+
+[tool.poetry.extras]
+influxdb = ["influxdb-client"]
+mqtt = ["paho-mqtt"]
+publishmethods = ["influxdb-client", "paho-mqtt"]
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.12.1"
