@@ -1,4 +1,5 @@
 from loguru import logger
+import toml
 import asyncio
 
 from dsmr_parser import telegram_specifications
@@ -19,9 +20,11 @@ async def parse_telegram_influx(name, queue: asyncio.Queue, config_file: str):
 
 async def httpmain(config_file="./p1_influx_db/config.toml"):
     queue = asyncio.Queue()
+    with open(config_file, "r") as f:
+        config = toml.load(f)
     logger.info("Opening SerialReader")
     serial_reader = AsyncSerialReader(
-        device="/dev/serial0",
+        device=config["p1"]["device"],
         serial_settings=SERIAL_SETTINGS_V5,
         telegram_specification=telegram_specifications.V5,
     )

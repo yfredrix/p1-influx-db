@@ -3,7 +3,7 @@ from .httpmain import httpmain
 from .mqttmain import mqttmain
 
 try:
-    import aiomqtt
+    import paho.mqtt.client
 
     method = "mqtt"
 except ImportError:
