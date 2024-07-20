@@ -27,7 +27,7 @@ def mqttmain(config_file="./p1_influx_db/example_config.toml"):
             info_list = parse_dsmr_telegram(telegram)
 
             for dsmr_message in info_list:
-                client.publish(dsmr_message)
+                client.publish_messages(dsmr_message)
     except Exception as e:
         client.stop()
         logger.info("Closing MqttClient")

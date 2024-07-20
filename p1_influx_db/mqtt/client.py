@@ -32,9 +32,9 @@ class MqttClient(mqtt.Client):
     def stop(self):
         self.loop_stop()
 
-    def publish(self, message: dsmrMessages):
-        topic = message["topic"]
-        payload = message["payload"]
+    def publish_messages(self, message: dsmrMessages):
+        topic = message.topic
+        payload = message.payload.model_dump_json()
         result = self.publish(topic, payload)
 
         status = result[0]
