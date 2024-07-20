@@ -4,6 +4,7 @@ import ssl
 
 from p1_influx_db.dsmr_parse import dsmrMessages
 
+
 class MqttClient(mqtt.Client):
     def __init__(self, broker, port, client_id, ca_certs, certfile, key):
         super().__init__(mqtt.CallbackAPIVersion.VERSION2, protocol=mqtt.MQTTv5)
@@ -11,14 +12,20 @@ class MqttClient(mqtt.Client):
         self.port = port
         self.client_id = client_id
         self.tls_insecure_set = False
-        self.tls_set(ca_certs=ca_certs, certfile=certfile, keyfile=key, cert_reqs=ssl.CERT_REQUIRED, tls_version=ssl.PROTOCOL_TLS)
+        self.tls_set(
+            ca_certs=ca_certs,
+            certfile=certfile,
+            keyfile=key,
+            cert_reqs=ssl.CERT_REQUIRED,
+            tls_version=ssl.PROTOCOL_TLS,
+        )
 
     def on_connect(self, userdata, flags, rc, properties):
         if rc == 0:
             logger.info("Connected to MQTT Broker!")
         else:
             logger.error("Failed to connect, return code %d\n", rc)
-    
+
     def on_publish(self, userdata, mid, reason_code, properties):
         try:
             userdata.remove(mid)
@@ -28,7 +35,7 @@ class MqttClient(mqtt.Client):
     def start(self):
         self.connect(self.broker, self.port)
         self.loop_start()
-    
+
     def stop(self):
         self.loop_stop()
 
