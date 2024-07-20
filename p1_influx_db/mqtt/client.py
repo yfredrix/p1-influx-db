@@ -11,7 +11,6 @@ class MqttClient(mqtt.Client):
         self.broker = broker
         self.port = port
         self.client_id = client_id
-        self.tls_insecure_set = False
         self.tls_set(
             ca_certs=ca_certs,
             certfile=certfile,
