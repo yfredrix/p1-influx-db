@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v1.3.3 (2024-07-20)
+
+### Chore
+
+* chore: Refactor argument parsing in __main__.py ([`0a3b1c5`](https://github.com/yfredrix/p1-influx-db/commit/0a3b1c5d65c3337d6ed242cde6e6db33d8d4d60f))
+
+### Fix
+
+* fix: Refactor argument parsing in __main__.py
+
+The code changes refactor the argument parsing in the __main__.py file. The unnecessary newline and indentation in the argument definition are removed, resulting in cleaner and more concise code. ([`d98fc03`](https://github.com/yfredrix/p1-influx-db/commit/d98fc0393f0bf3a7f6e642e47b2b84ec89ee26b0))
+
 ## v1.3.2 (2024-07-20)
 
 ### Chore
