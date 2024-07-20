@@ -19,12 +19,6 @@ class MqttClient(mqtt.Client):
             tls_version=ssl.PROTOCOL_TLS,
         )
 
-    def on_connect(self, userdata, flags, rc, properties):
-        if rc == 0:
-            logger.info("Connected to MQTT Broker!")
-        else:
-            logger.error("Failed to connect, return code %d\n", rc)
-
     def on_publish(self, userdata, mid, reason_code, properties):
         try:
             userdata.remove(mid)
