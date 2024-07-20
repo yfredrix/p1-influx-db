@@ -1,6 +1,16 @@
 # CHANGELOG
 
+## v1.4.0 (2024-07-20)
+
+### Unknown
+
+* Merge branch &#39;main&#39; of https://github.com/yfredrix/p1-influx-db ([`313ee2e`](https://github.com/yfredrix/p1-influx-db/commit/313ee2e4bb70d855efb6c4585b78339c9869268b))
+
 ## v1.3.4 (2024-07-20)
+
+### Feature
+
+* feat: removed logging function of on_connect ([`00de0f1`](https://github.com/yfredrix/p1-influx-db/commit/00de0f1df9fbc82ef9d1ae701b5f81d01b6bfc1e))
 
 ### Fix
 
