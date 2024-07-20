@@ -2,6 +2,8 @@ from loguru import logger
 from .httpmain import httpmain
 from .mqttmain import mqttmain
 
+__version__ = "1.0.0"
+
 try:
     import paho.mqtt.client
 
