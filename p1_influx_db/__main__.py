@@ -3,9 +3,7 @@ import argparse
 from p1_influx_db import method
 
 parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--config", help="config file", default="./p1_influx_db/example_config.toml"
-)
+parser.add_argument("--config", help="config file", default="./p1_influx_db/example_config.toml")
 args = parser.parse_args()
 if method == "mqtt":
     from p1_influx_db import mqttmain
