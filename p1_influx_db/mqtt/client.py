@@ -6,7 +6,9 @@ from p1_influx_db.dsmr_parse import dsmrMessages
 
 
 class MqttClient(mqtt.Client):
-    def __init__(self, broker, port, client_id, ca_certs, certfile, key, client_password):
+    def __init__(
+        self, broker, port, client_id, ca_certs, certfile, key, client_password
+    ):
         super().__init__(mqtt.CallbackAPIVersion.VERSION2, protocol=mqtt.MQTTv5)
         self.broker = broker
         self.port = port
@@ -30,7 +32,7 @@ class MqttClient(mqtt.Client):
     def publish_messages(self, message: dsmrMessages):
         topic = message.topic
         payload = message.payload.model_dump_json()
-        messageInfo = self.publish(f"p1/{topic}", payload, retain=True)
+        messageInfo = self.publish(f"p1/{topic}", payload, qos=1)
         messageInfo.wait_for_publish(10)
 
         status = messageInfo.rc
