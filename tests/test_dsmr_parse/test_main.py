@@ -11,9 +11,7 @@ def test_parse_dsmr_telegram():
     telegram = Telegram(
         {
             "EQUIPMENT_IDENTIFIER": {"value": "123456789"},
-            "P1_MESSAGE_TIMESTAMP": {
-                "value": datetime(2022, 1, 1, 0, 0, 0).astimezone(pytz.utc)
-            },
+            "P1_MESSAGE_TIMESTAMP": {"value": datetime(2022, 1, 1, 0, 0, 0).astimezone(pytz.utc)},
             "ELECTRICITY_ACTIVE_TARIFF": {"value": "1"},
             "ELECTRICITY_USED_TARIFF_1": {"unit": "kWh", "value": 10},
             "ELECTRICITY_USED_TARIFF_2": {"unit": "kWh", "value": 20},
