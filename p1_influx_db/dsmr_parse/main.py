@@ -3,8 +3,6 @@ from typing import Dict, List
 
 from dsmr_parser.objects import Telegram
 
-import json
-
 from .formats import dsmrMessages, p1Messages
 
 
@@ -31,12 +29,12 @@ def fill_fields(
     message = message.model_dump()
     for key in keylist:
         if not hasattr(parsed_telegram, key):
-            logger.error("Key not in telegram")
+            logger.debug("Key not in telegram")
             continue
         if getattr(parsed_telegram, key).unit != unitCheck:
             logger.critical(f"Unit is not {unitCheck}")
             return p1MessageList
-        message["fields"][key.lower()] = getattr(parsed_telegram, key).value
+        message["fields"][key.lower()] = float(getattr(parsed_telegram, key).value)
     if list(dict(message)["fields"].keys()):
         p1MessageList.append(dsmrMessages(topic=topic, payload=p1Messages(**message)))
     return p1MessageList
@@ -53,7 +51,6 @@ def parse_dsmr_telegram(telegram: Telegram):
         list: A list of dsmrMessages containing the parsed data.
 
     """
-    logger.info(f"Data in telegram: {list(telegram.keys())}")
     p1MessageList = []
     electricity_measurement = p1Messages(
         measurement="electricity",
