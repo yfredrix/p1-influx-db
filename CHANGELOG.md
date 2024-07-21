@@ -1,5 +1,41 @@
 # CHANGELOG
 
+## v1.5.0 (2024-07-21)
+
+### Feature
+
+* feat: Update equipment_id and time fields in parse_dsmr_telegram ([`19d3b1e`](https://github.com/yfredrix/p1-influx-db/commit/19d3b1e830255d5b0dd4abdfbf7487dda1929a92))
+
+* feat: Removed password support ([`b834231`](https://github.com/yfredrix/p1-influx-db/commit/b83423158d544a66dead5987bf4dd5bd5b8b78e8))
+
+* feat: Added QoS to mqtt publish ([`c45d418`](https://github.com/yfredrix/p1-influx-db/commit/c45d418aee58b8aac8c92129ec558c3da0539a30))
+
+* feat: Added password for MQTT ([`ea130f9`](https://github.com/yfredrix/p1-influx-db/commit/ea130f9b8096c883fdd374b947624628763b11e9))
+
+* feat: Fixed the parser of DSMR messages and sending to MQTT ([`6662abe`](https://github.com/yfredrix/p1-influx-db/commit/6662abe22b4f0a7319333ea4304b10b3fa430d94))
+
+### Fix
+
+* fix: work on all pcs ([`a220614`](https://github.com/yfredrix/p1-influx-db/commit/a220614f2d4f85e97ddd59f49b9db7eba88c103c))
+
+### Refactor
+
+* refactor: Formated files to max 127 chars ([`275c5cf`](https://github.com/yfredrix/p1-influx-db/commit/275c5cf54b340d9dd8392b540634fb10c6606c45))
+
+* refactor: Update equipment_id and time fields in parse_dsmr_telegram
+
+The code changes update the equipment_id and time fields in the parse_dsmr_telegram function. Instead of accessing the values using dictionary keys, the code now directly accesses the attributes of the telegram object. This improves readability and simplifies the code. ([`c9ab7f9`](https://github.com/yfredrix/p1-influx-db/commit/c9ab7f96ca80bbda9bd871d14f852a0cdac28592))
+
+### Unknown
+
+* Merge pull request #3 from yfredrix/parse_tests
+
+feat: Updated the parser to work with Telegram objects; changed the QoS for MQTT ([`5ca7341`](https://github.com/yfredrix/p1-influx-db/commit/5ca734174ee0150967e1fcacad521bb9ac2f69eb))
+
+* Add test data ([`9e1f4cc`](https://github.com/yfredrix/p1-influx-db/commit/9e1f4ccd065fa4c6db774d0e8d6ba0b3ca8ba57a))
+
+* Changed topic ([`47ad321`](https://github.com/yfredrix/p1-influx-db/commit/47ad321cc60882f4e4787daabc6845e95b353f75))
+
 ## v1.4.0 (2024-07-20)
 
 ### Unknown
