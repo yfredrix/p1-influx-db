@@ -25,7 +25,7 @@ def test_parse_dsmr_telegram():
                 "electricity_delivered_tariff_1": 0.0,
                 "electricity_delivered_tariff_2": 0.0,
             },
-            "time": datetime(2024, 7, 21, 14, 49, 20).astimezone(pytz.utc),
+            "time": datetime(2024, 7, 21, 12, 49, 20, tzinfo=pytz.utc),
         },
         {
             "measurement": "electricity_current",
@@ -40,7 +40,7 @@ def test_parse_dsmr_telegram():
                 "instantaneous_active_power_l1_positive": 0.381,
                 "instantaneous_active_power_l1_negative": 0.0,
             },
-            "time": datetime(2024, 7, 21, 14, 49, 20).astimezone(pytz.utc),
+            "time": datetime(2024, 7, 21, 12, 49, 20, tzinfo=pytz.utc),
         },
         {
             "measurement": "current",
@@ -51,7 +51,7 @@ def test_parse_dsmr_telegram():
             "fields": {
                 "instantaneous_current_l1": 2.0,
             },
-            "time": datetime(2024, 7, 21, 14, 49, 20).astimezone(pytz.utc),
+            "time": datetime(2024, 7, 21, 12, 49, 20, tzinfo=pytz.utc),
         },
     ]
 
