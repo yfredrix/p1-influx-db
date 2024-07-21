@@ -6,9 +6,7 @@ from p1_influx_db.dsmr_parse import dsmrMessages
 
 
 class MqttClient(mqtt.Client):
-    def __init__(
-        self, broker, port, client_id, ca_certs, certfile, key, client_password
-    ):
+    def __init__(self, broker, port, client_id, ca_certs, certfile, key):
         super().__init__(mqtt.CallbackAPIVersion.VERSION2, protocol=mqtt.MQTTv5)
         self.broker = broker
         self.port = port
@@ -20,7 +18,6 @@ class MqttClient(mqtt.Client):
             cert_reqs=ssl.CERT_REQUIRED,
             tls_version=ssl.PROTOCOL_TLS,
         )
-        self.username_pw_set(username=client_id, password=client_password)
 
     def start(self):
         self.connect(self.broker, self.port)

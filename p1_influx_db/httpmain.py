@@ -30,7 +30,11 @@ async def httpmain(config_file="./p1_influx_db/config.toml"):
     )
     tasks = []
     for i in range(3):
-        tasks.append(asyncio.create_task(parse_telegram_influx(f"worker-{i}", queue, config_file=config_file)))
+        tasks.append(
+            asyncio.create_task(
+                parse_telegram_influx(f"worker-{i}", queue, config_file=config_file)
+            )
+        )
 
     await serial_reader.read_as_object(queue)
     result = await asyncio.gather(*tasks, return_exceptions=True)

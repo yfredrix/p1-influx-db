@@ -11,7 +11,6 @@ client_id = "client_id"
 ca_certs = "/etc/certificate/abc"
 certfile = "/etc/certificate/abc"
 key = "etc/certificate/key"
-client_password = "welcome123"
 
 [p1]
 device = "/dev/serial0"
