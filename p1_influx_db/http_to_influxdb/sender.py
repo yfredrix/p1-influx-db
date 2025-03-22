@@ -33,4 +33,5 @@ async def send_parsed_telegram(info_list, queue: asyncio.Queue, config_file: str
                 raise result
             else:
                 logger.info(f"Writing to bucket {result[0][0]} succeeded")
+        logger.debug("Result of writing to influxdb: {results}")
         return all(results)
