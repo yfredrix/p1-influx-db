@@ -3,6 +3,11 @@
 
 ## v1.5.2 (2025-03-22)
 
+### Break
+
+- Updated semantic versioning
+  ([`26f08cb`](https://github.com/yfredrix/p1-influx-db/commit/26f08cbfa2b8e928b12f03d9a78ce77f7814df0e))
+
 ### Bug Fixes
 
 - Added a log clause
