@@ -1,6 +1,22 @@
 # CHANGELOG
 
 
+## v2.0.0 (2025-03-22)
+
+### Bug Fixes
+
+- Removed uselesss import
+  ([`3d9e62e`](https://github.com/yfredrix/p1-influx-db/commit/3d9e62e935e22e8b41a999384a3c51098263fd6b))
+
+Within the main http file an automatic import was made which had no reason to be there
+
+BREAKING CHANGE: configs are now required
+
+### Breaking Changes
+
+- Configs are now required
+
+
 ## v1.5.2 (2025-03-22)
 
 ### Break
