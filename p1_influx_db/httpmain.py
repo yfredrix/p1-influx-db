@@ -38,7 +38,7 @@ async def mainhttp(config: Dict[str, Any]):
                 parse_telegram_influx(
                     f"worker-{i}",
                     queue,
-                    config=config["p1"]["filepath"],
+                    config_file=config["p1"]["filepath"],
                     parser=dsmrParser,
                 )
             )
