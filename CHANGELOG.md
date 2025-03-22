@@ -8,6 +8,17 @@
 - Updated semantic versioning
   ([`26f08cb`](https://github.com/yfredrix/p1-influx-db/commit/26f08cbfa2b8e928b12f03d9a78ce77f7814df0e))
 
+### Breaking Change
+
+- Fix version
+  ([`db4c610`](https://github.com/yfredrix/p1-influx-db/commit/db4c610702dbbd96b09e0a2c1cd30a749f40ed18))
+
+- New config approach
+  ([`51415d4`](https://github.com/yfredrix/p1-influx-db/commit/51415d49668759154d4931f8aac65e448a7e2e76))
+
+- Use config for value determination
+  ([`45448d2`](https://github.com/yfredrix/p1-influx-db/commit/45448d270290940f1d8fc671b3ee7ece0166b362))
+
 ### Bug Fixes
 
 - Added a log clause
