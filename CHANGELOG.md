@@ -1,6 +1,45 @@
 # CHANGELOG
 
 
+## v1.5.2 (2025-03-22)
+
+### Bug Fixes
+
+- Added a log clause
+  ([`8e1c4a9`](https://github.com/yfredrix/p1-influx-db/commit/8e1c4a96eb9e816a842764e7e8c9251bd09d1326))
+
+- Blacked the files
+  ([`40eb684`](https://github.com/yfredrix/p1-influx-db/commit/40eb6846b8185e3aee372e1251fa06d835a31f92))
+
+- Https method to influx
+  ([`7adfd2f`](https://github.com/yfredrix/p1-influx-db/commit/7adfd2f4ee431bb8ca0f4a86e5bf7ebbc2f63ef9))
+
+- Solved forgotten issue with config-file
+  ([`e0b10bb`](https://github.com/yfredrix/p1-influx-db/commit/e0b10bb382ea047cf6030390d4cf3620240b84a6))
+
+- Unittest and typo issue with keys
+  ([`9a3069b`](https://github.com/yfredrix/p1-influx-db/commit/9a3069bc7ac3d48994f68a8e86390053ac9206d3))
+
+- Updated library links
+  ([`6312de7`](https://github.com/yfredrix/p1-influx-db/commit/6312de7d14e2348e4d032d44348b84e1ef002a0f))
+
+- Updated packages
+  ([`7b7758c`](https://github.com/yfredrix/p1-influx-db/commit/7b7758cf557bbe2183d12d52065539d258d94b6e))
+
+### Chores
+
+- Blacked files
+  ([`17bc1cb`](https://github.com/yfredrix/p1-influx-db/commit/17bc1cb51bae4525ebc3495223eaf996883eb6ed))
+
+- Updated release pipeline
+  ([`2b65970`](https://github.com/yfredrix/p1-influx-db/commit/2b659707cc7bbeef6bcacc6477406a99ee0172d8))
+
+### Documentation
+
+- Updated readme
+  ([`febce19`](https://github.com/yfredrix/p1-influx-db/commit/febce1984fc3666b6b1c8eb342be9132b6abea22))
+
+
 ## v1.5.1 (2025-03-22)
 
 ### Bug Fixes
@@ -9,6 +48,9 @@
   ([`36a983f`](https://github.com/yfredrix/p1-influx-db/commit/36a983fd55fb63b7388035387e5b4a39ec486977))
 
 ### Chores
+
+- Added black configuration to pyproject.toml
+  ([`b62212d`](https://github.com/yfredrix/p1-influx-db/commit/b62212d5ee020b3563d2071570549352bab2bec3))
 
 - Formatted files with line-length=127
   ([`a3382c4`](https://github.com/yfredrix/p1-influx-db/commit/a3382c4ae036bdb35e7780347e49873569d5bbde))
