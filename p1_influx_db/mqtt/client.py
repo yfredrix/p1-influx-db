@@ -30,7 +30,7 @@ class MqttClient(mqtt.Client):
         topic = message.topic
         payload = message.payload.model_dump_json()
         messageInfo = self.publish(f"p1/{topic}", payload, qos=1)
-        messageInfo.wait_for_publish(10)
+        messageInfo.wait_for_publish(1.5)
 
         status = messageInfo.rc
         if status == 0:
