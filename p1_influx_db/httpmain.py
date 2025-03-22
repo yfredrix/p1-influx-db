@@ -3,7 +3,7 @@ from loguru import logger
 import asyncio
 from typing import Dict, Any
 
-from dsmr_parse import dsmrParse
+from p1_influx_db.dsmr_parse import dsmrParse
 from dsmr_parser import telegram_specifications
 from dsmr_parser.clients import AsyncSerialReader, SERIAL_SETTINGS_V5
 from aiohttp.client_exceptions import ClientConnectorError

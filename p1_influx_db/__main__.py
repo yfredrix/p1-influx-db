@@ -19,8 +19,8 @@ if "mqtt" in config:
         raise NotImplementedError(
             "Package install has failed; please use p1_influx_db[mqtt]"
         )
-    mqttmain()
-elif "http" in config:
+    mqttmain(config)
+elif "influx2" in config:
     try:
         import asyncio
         from p1_influx_db.httpmain import mainhttp
@@ -28,4 +28,4 @@ elif "http" in config:
         raise NotImplementedError(
             "Package install has failed; please use p1_influx_db[http]"
         )
-    asyncio.run(mainhttp())
+    asyncio.run(mainhttp(config))

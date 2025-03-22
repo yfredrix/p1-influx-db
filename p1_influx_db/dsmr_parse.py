@@ -19,8 +19,9 @@ dsmrMessages = namedtuple("dsmrMessages", ["topic", "payload"])
 
 class dsmrParse:
     def __init__(self, config):
-        for key in config["p1"]:
-            setattr(self, key, config["p1"][key])
+        for key in config:
+            if "keys" in config[key]:
+                setattr(self, key, config[key]["keys"])
 
     def parse_dsmr_telegram(self, telegram: Telegram):
         """
