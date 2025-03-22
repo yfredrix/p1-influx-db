@@ -14,9 +14,10 @@ class p1Messages(BaseModel):
     time: AwareDatetime
 
 
-class dsmrParse:
-    dsmrMessages = namedtuple("dsmrMessages", ["topic", "payload"])
+dsmrMessages = namedtuple("dsmrMessages", ["topic", "payload"])
 
+
+class dsmrParse:
     def __init__(self, config):
         for key in config["p1"]:
             setattr(self, key, config["p1"][key])
@@ -159,6 +160,6 @@ class dsmrParse:
             message["fields"][key.lower()] = float(getattr(parsed_telegram, key).value)
         if list(dict(message)["fields"].keys()):
             p1MessageList.append(
-                self.dsmrMessages(topic=topic, payload=p1Messages(**message))
+                dsmrMessages(topic=topic, payload=p1Messages(**message))
             )
         return p1MessageList

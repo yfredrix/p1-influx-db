@@ -4,7 +4,7 @@ from typing import Dict, Any
 from dsmr_parser import telegram_specifications
 from dsmr_parser.clients import SerialReader, SERIAL_SETTINGS_V5
 
-from dsmr_parse import dsmrParse
+from p1_influx_db.dsmr_parse import dsmrParse
 
 from p1_influx_db.mqtt import Client
 
