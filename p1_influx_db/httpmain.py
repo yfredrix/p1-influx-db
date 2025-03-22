@@ -1,4 +1,3 @@
-from html import parser
 from loguru import logger
 import asyncio
 from typing import Dict, Any
