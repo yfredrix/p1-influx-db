@@ -152,6 +152,7 @@ class dsmrParse:
         """
         message = message.model_dump()
         for key in keylist:
+            key = str.upper(key)
             if not hasattr(parsed_telegram, key):
                 logger.debug("Key not in telegram")
                 continue
@@ -160,5 +161,7 @@ class dsmrParse:
                 return p1MessageList
             message["fields"][key.lower()] = float(getattr(parsed_telegram, key).value)
         if list(dict(message)["fields"].keys()):
-            p1MessageList.append(dsmrMessages(topic=topic, payload=p1Messages(**message)))
+            p1MessageList.append(
+                dsmrMessages(topic=topic, payload=p1Messages(**message))
+            )
         return p1MessageList

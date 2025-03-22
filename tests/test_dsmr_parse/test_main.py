@@ -4,11 +4,36 @@ import pickle
 
 from datetime import datetime
 
-from p1_influx_db.dsmr_parse import parse_dsmr_telegram
+from p1_influx_db.dsmr_parse import dsmrParse
 from dsmr_parser.objects import Telegram
 
 
-def test_parse_dsmr_telegram():
+@pytest.fixture
+def init_dsmr_parse():
+    config = {}
+    config["electricity"] = {}
+    config["electricity"]["keys"] = [
+        "electricity_used_tariff_1",
+        "electricity_used_tariff_2",
+        "electricity_delivered_tariff_1",
+        "electricity_delivered_tariff_2",
+    ]
+
+    config["electricity_current"] = {}
+    config["electricity_current"]["keys"] = [
+        "current_electricity_usage",
+        "current_electricity_delivery",
+        "instantaneous_active_power_l1_positive",
+        "instantaneous_active_power_l1_negative",
+    ]
+
+    config["current"] = {}
+    config["current"]["keys"] = ["instantaneous_current_l1"]
+
+    return dsmrParse(config)
+
+
+def test_parse_dsmr_telegram(init_dsmr_parse):
     with open("tests/test_dsmr_parse/example.pkl", "rb") as f:
         telegram: Telegram = pickle.load(f)
 
@@ -55,6 +80,6 @@ def test_parse_dsmr_telegram():
         },
     ]
 
-    res = parse_dsmr_telegram(telegram)
+    res = init_dsmr_parse.parse_dsmr_telegram(telegram)
     readable_res = [i.payload.model_dump() for i in res]
     assert readable_res == expected_result
