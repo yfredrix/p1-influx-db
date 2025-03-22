@@ -9,9 +9,7 @@ from dsmr_parser.clients import AsyncSerialReader, SERIAL_SETTINGS_V5
 from aiohttp.client_exceptions import ClientConnectorError
 
 
-async def parse_telegram_influx(
-    name, queue: asyncio.Queue, config_file: str, parser: dsmrParse
-):
+async def parse_telegram_influx(name, queue: asyncio.Queue, config_file: str, parser: dsmrParse):
     while True:
         telegram = await queue.get()
         info_list = parser.parse_dsmr_telegram(telegram)

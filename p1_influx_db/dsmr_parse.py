@@ -160,7 +160,5 @@ class dsmrParse:
                 return p1MessageList
             message["fields"][key.lower()] = float(getattr(parsed_telegram, key).value)
         if list(dict(message)["fields"].keys()):
-            p1MessageList.append(
-                dsmrMessages(topic=topic, payload=p1Messages(**message))
-            )
+            p1MessageList.append(dsmrMessages(topic=topic, payload=p1Messages(**message)))
         return p1MessageList
