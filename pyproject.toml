@@ -91,3 +91,6 @@ insecure = false
 dist_glob_patterns = ["dist/*"]
 upload_to_vcs_release = true
 upload_to_PyPi = true
+
+[tool.black]
+line-length = 127
