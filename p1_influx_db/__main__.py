@@ -1,18 +1,31 @@
 import argparse
-
-from p1_influx_db import method
+import toml
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--config", help="config file", default="./p1_influx_db/example_config.toml")
+parser.add_argument(
+    "--config", help="config file", default="./p1_influx_db/example_config.toml"
+)
 args = parser.parse_args()
-if method == "mqtt":
-    from p1_influx_db.mqttmain import mqttmain
 
-    mqttmain(args.config)
-elif method == "http":
-    import asyncio
-    from p1_influx_db.httpmain import httpmain as mainhttp
+with open(args.config, "r") as f:
+    config = toml.load(f)
 
-    asyncio.run(mainhttp(args.config))
-else:
-    raise NotImplementedError("Method not implemented")
+config["p1"]["filepath"] = args.config
+
+if "mqtt" in config:
+    try:
+        from p1_influx_db.mqttmain import mqttmain
+    except ImportError:
+        raise NotImplementedError(
+            "Package install has failed; please use p1_influx_db[mqtt]"
+        )
+    mqttmain()
+elif "http" in config:
+    try:
+        import asyncio
+        from p1_influx_db.httpmain import mainhttp
+    except ImportError:
+        raise NotImplementedError(
+            "Package install has failed; please use p1_influx_db[http]"
+        )
+    asyncio.run(mainhttp())
