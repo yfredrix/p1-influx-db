@@ -8,7 +8,11 @@ args = parser.parse_args()
 with open(args.config, "r") as f:
     config = toml.load(f)
 
+if not "p1" in config and (not ("influx2" in config or "mqtt" in config)):
+    raise NotImplementedError("The config should contain a p1 and influx2 or mqtt section")
+
 config["p1"]["filepath"] = args.config
+
 
 if "mqtt" in config:
     try:
