@@ -3,28 +3,9 @@
 
 ## v2.0.0 (2025-03-22)
 
-### Bug Fixes
-
-- Removed uselesss import
-  ([`3d9e62e`](https://github.com/yfredrix/p1-influx-db/commit/3d9e62e935e22e8b41a999384a3c51098263fd6b))
-
-Within the main http file an automatic import was made which had no reason to be there
-
-BREAKING CHANGE: configs are now required
-
 ### Breaking Changes
 
 - Configs are now required
-
-
-## v1.5.2 (2025-03-22)
-
-### Break
-
-- Updated semantic versioning
-  ([`26f08cb`](https://github.com/yfredrix/p1-influx-db/commit/26f08cbfa2b8e928b12f03d9a78ce77f7814df0e))
-
-### Breaking Change
 
 - Fix version
   ([`db4c610`](https://github.com/yfredrix/p1-influx-db/commit/db4c610702dbbd96b09e0a2c1cd30a749f40ed18))
@@ -35,7 +16,16 @@ BREAKING CHANGE: configs are now required
 - Use config for value determination
   ([`45448d2`](https://github.com/yfredrix/p1-influx-db/commit/45448d270290940f1d8fc671b3ee7ece0166b362))
 
+
+### Break
+
+- Updated semantic versioning
+  ([`26f08cb`](https://github.com/yfredrix/p1-influx-db/commit/26f08cbfa2b8e928b12f03d9a78ce77f7814df0e))
+
 ### Bug Fixes
+
+- Removed uselesss import
+  ([`3d9e62e`](https://github.com/yfredrix/p1-influx-db/commit/3d9e62e935e22e8b41a999384a3c51098263fd6b))
 
 - Added a log clause
   ([`8e1c4a9`](https://github.com/yfredrix/p1-influx-db/commit/8e1c4a96eb9e816a842764e7e8c9251bd09d1326))
