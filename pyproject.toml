@@ -20,7 +20,7 @@ mqtt = ["paho-mqtt"]
 publishmethods = ["influxdb-client", "paho-mqtt"]
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.12.1"
+black = ">=23.12.1,<25.0.0"
 pytest = "^7.4.4"
 python-semantic-release = "^9.8.3"
 
