@@ -11,7 +11,8 @@ on:
 
 jobs:
   test:
-
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -47,8 +48,6 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    
-
     steps:
     - uses: actions/checkout@v3
       with:
