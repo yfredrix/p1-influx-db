@@ -15,7 +15,7 @@ def on_disconnect_handler(client, userdata, flags, rc, properties):
     if rc != 0:
         logger.info("Unexpected disconnection. Attempting to reconnect...")
         time.sleep(5)
-        client.reconnect()
+        client.reconnect_loop()
 
 
 def on_publish_handler(client, userdata, mid, rc, properties):
@@ -67,3 +67,14 @@ class MqttClient(mqtt.Client):
             logger.info(f"Resending message to topic {topic}")
             self.publish_messages(topic, payload)
             time.sleep(1)  # Optional delay between resends
+
+    def reconnect_loop(self):
+        times = 0
+        while times < 60:
+            try:
+                self.reconnect()
+                break
+            except Exception as e:
+                logger.error(f"Reconnect failed: {e}")
+                times += 1
+                time.sleep(5)  # Wait before retrying to reconnect
