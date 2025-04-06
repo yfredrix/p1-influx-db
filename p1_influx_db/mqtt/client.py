@@ -54,7 +54,6 @@ class MqttClient(mqtt.Client):
         self.loop_stop()
 
     def publish_messages(self, topic, payload):
-        topic = f"p1/{topic}"
         message_info = self.publish(topic, payload, qos=1)
         if message_info.rc == mqtt.MQTT_ERR_NO_CONN:
             logger.error("Not connected. Storing message for later.")

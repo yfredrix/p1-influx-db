@@ -24,7 +24,7 @@ def mqttmain(config: Dict[str, Any]):
         for telegram in serial_reader.read_as_object():
             info_list = dsmrParser.parse_dsmr_telegram(telegram)
             for dsmr_message in info_list:
-                topic = dsmr_message.topic
+                topic = f"p1/{dsmr_message.topic}"
                 payload = dsmr_message.payload.model_dump_json()
                 client.publish_messages(topic, payload)
 
