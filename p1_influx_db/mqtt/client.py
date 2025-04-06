@@ -26,6 +26,8 @@ def on_publish_handler(client, userdata, mid, rc, properties):
 
 def handle_exceptions(e):
     print(traceback.print_exception(e.exc_type, e.exc_value, e.exc_traceback))
+    raise Exception(f"Unhandled exception in thread: {e.exc_type.__name__}: {e.exc_value}") from e.exc_value
+
 
 class MqttClient(mqtt.Client):
     def __init__(self, broker, port, client_id, ca_certs, certfile, key):
