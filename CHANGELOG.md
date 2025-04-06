@@ -1,6 +1,38 @@
 # CHANGELOG
 
 
+## v2.2.0 (2025-04-06)
+
+### Chores
+
+- Added action permissions
+  ([`5ca757a`](https://github.com/yfredrix/p1-influx-db/commit/5ca757aee84f33300e51a3279341c4d30c303650))
+
+- **deps-dev**: Bump black in the pip group across 1 directory
+  ([#5](https://github.com/yfredrix/p1-influx-db/pull/5),
+  [`9b8baf3`](https://github.com/yfredrix/p1-influx-db/commit/9b8baf372f812cd0fe9e8637a3f25ca084ee8101))
+
+Bumps the pip group with 1 update in the / directory: [black](https://github.com/psf/black).
+
+Updates `black` from 23.12.1 to 24.3.0 - [Release notes](https://github.com/psf/black/releases) -
+  [Changelog](https://github.com/psf/black/blob/main/CHANGES.md) -
+  [Commits](https://github.com/psf/black/compare/23.12.1...24.3.0)
+
+--- updated-dependencies: - dependency-name: black dependency-type: direct:development
+
+dependency-group: pip ...
+
+Signed-off-by: dependabot[bot] <support@github.com>
+
+Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+
+### Features
+
+- Added the opportunity for a dead queue for losing connection to the broker
+  ([#6](https://github.com/yfredrix/p1-influx-db/pull/6),
+  [`5bdf3f2`](https://github.com/yfredrix/p1-influx-db/commit/5bdf3f291622b632e8eebfaf97e9a39ebe3adcd9))
+
+
 ## v2.1.0 (2025-03-23)
 
 ### Features
