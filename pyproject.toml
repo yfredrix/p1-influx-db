@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "p1-influx-db"
-version = "2.3.0"
+version = "2.3.1"
 description = "Parsing P1 serial to Influx DB"
 authors = ["Yorick Fredrix <yorick.fredrix@outlook.com>"]
 readme = "README.md"

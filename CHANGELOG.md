@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.3.1 (2025-04-06)
+
+### Bug Fixes
+
+- Topic definition to prevent longer topics by retries
+  ([`18991b5`](https://github.com/yfredrix/p1-influx-db/commit/18991b5cd0bce76628fb764ab92c23db898a1ddd))
+
+
 ## v2.3.0 (2025-04-06)
 
 ### Features
