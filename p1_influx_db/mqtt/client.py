@@ -51,6 +51,7 @@ class MqttClient(mqtt.Client):
         self.loop_stop()
 
     def publish_messages(self, topic, payload):
+        topic = f"p1/{topic}"
         message_info = self.publish(topic, payload, qos=1)
         if message_info.rc == mqtt.MQTT_ERR_NO_CONN:
             logger.error("Not connected. Storing message for later.")
@@ -70,7 +71,7 @@ class MqttClient(mqtt.Client):
 
     def reconnect_loop(self):
         times = 0
-        while times < 5:
+        while times < 60:
             try:
                 self.start()
                 break
@@ -78,6 +79,6 @@ class MqttClient(mqtt.Client):
                 logger.error(f"Reconnect failed: {e}")
                 times += 1
                 time.sleep(5)  # Wait before retrying to reconnect
-        if times >= 5:
+        if times >= 60:
             logger.error("Failed to reconnect after multiple attempts.")
             raise Exception("Failed to reconnect after multiple attempts.")
