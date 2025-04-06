@@ -44,8 +44,8 @@ class MqttClient(mqtt.Client):
         self.on_publish = on_publish_handler
 
     def start(self):
-        self.connect(self.broker, self.port, clean_start=mqtt.MQTT_CLEAN_START_FIRST_ONLY)
         self.loop_start()
+        self.connect(self.broker, self.port, clean_start=mqtt.MQTT_CLEAN_START_FIRST_ONLY)
 
     def stop(self):
         self.loop_stop()
@@ -70,11 +70,14 @@ class MqttClient(mqtt.Client):
 
     def reconnect_loop(self):
         times = 0
-        while times < 60:
+        while times < 5:
             try:
-                self.reconnect()
+                self.start()
                 break
             except Exception as e:
                 logger.error(f"Reconnect failed: {e}")
                 times += 1
                 time.sleep(5)  # Wait before retrying to reconnect
+        if times >= 5:
+            logger.error("Failed to reconnect after multiple attempts.")
+            raise Exception("Failed to reconnect after multiple attempts.")
