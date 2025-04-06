@@ -71,9 +71,9 @@ class MqttClient(mqtt.Client):
             time.sleep(1)  # Optional delay between resends
 
     def reconnect_loop(self):
-        logger.info(f"Attempting to reconnect, times: {self.times}")
         while self.times < 2:
             try:
+                logger.info(f"Attempting to reconnect, times: {self.times}")
                 self.start()
                 self.times = 0
                 break
