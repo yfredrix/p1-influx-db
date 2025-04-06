@@ -4,6 +4,8 @@ import ssl
 import time
 from p1_influx_db.mqtt.message_store import MessageStore
 
+import os
+
 
 def on_connect_handler(client, userdata, flags, rc, properties):
     logger.debug("Connected with result code " + str(rc))
@@ -85,4 +87,4 @@ class MqttClient(mqtt.Client):
             logger.error("Failed to reconnect after multiple attempts.")
             self.stop()
             self.loop_stop()
-            raise SystemExit(1)
+            raise os._exit(1)
