@@ -5,6 +5,23 @@ import time
 from p1_influx_db.mqtt.message_store import MessageStore
 
 
+def on_connect_handler(client, userdata, flags, rc, properties):
+    logger.debug("Connected with result code " + str(rc))
+    client.resend_messages()
+
+
+def on_disconnect_handler(client, userdata, flags, rc, properties):
+    logger.warning("Disconnected with result code " + str(rc))
+    if rc != 0:
+        logger.info("Unexpected disconnection. Attempting to reconnect...")
+        time.sleep(5)
+        client.reconnect()
+
+
+def on_publish_handler(client, userdata, mid, rc, properties):
+    logger.debug(f"Message {mid} published.")
+
+
 class MqttClient(mqtt.Client):
     def __init__(self, broker, port, client_id, ca_certs, certfile, key):
         super().__init__(mqtt.CallbackAPIVersion.VERSION2, protocol=mqtt.MQTTv5)
@@ -22,9 +39,9 @@ class MqttClient(mqtt.Client):
             tls_version=ssl.PROTOCOL_TLS,
         )
 
-        self.on_connect = self.on_connect_handler
-        self.on_disconnect = self.on_disconnect_handler
-        self.on_publish = self.on_publish_handler
+        self.on_connect = on_connect_handler
+        self.on_disconnect = on_disconnect_handler
+        self.on_publish = on_publish_handler
 
     def start(self):
         self.connect(self.broker, self.port, clean_start=mqtt.MQTT_CLEAN_START_FIRST_ONLY)
@@ -32,20 +49,6 @@ class MqttClient(mqtt.Client):
 
     def stop(self):
         self.loop_stop()
-
-    def on_connect_handler(self, client, userdata, flags, rc):
-        logger.debug("Connected with result code " + str(rc))
-        self.resend_messages()
-
-    def on_disconnect_handler(self, client, userdata, rc):
-        logger.warning("Disconnected with result code " + str(rc))
-        if rc != 0:
-            logger.info("Unexpected disconnection. Attempting to reconnect...")
-            time.sleep(5)
-            self.reconnect()
-
-    def on_publish_handler(self, client, userdata, mid):
-        logger.debug(f"Message {mid} published.")
 
     def publish_messages(self, topic, payload):
         message_info = self.publish(topic, payload, qos=1)
