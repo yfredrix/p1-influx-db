@@ -134,7 +134,7 @@ class dsmrParse:
         parsed_telegram: Dict[str, any],
         keylist: List[str],
         message: p1Messages,
-        p1MessageList: List[p1Messages],
+        p1MessageList: List[dsmrMessages],
         unitCheck: str,
         topic: str,
     ):
