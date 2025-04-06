@@ -30,6 +30,7 @@ class MqttClient(mqtt.Client):
         self.client_id = client_id
         self.message_store = MessageStore()
         self.last_will = None
+        self.times = 0
 
         self.tls_set(
             ca_certs=ca_certs,
@@ -70,15 +71,16 @@ class MqttClient(mqtt.Client):
             time.sleep(1)  # Optional delay between resends
 
     def reconnect_loop(self):
-        times = 0
-        while times < 60:
+        logger.info(f"Attempting to reconnect, times: {self.times}")
+        while self.times < 2:
             try:
                 self.start()
+                self.times = 0
                 break
             except Exception as e:
                 logger.error(f"Reconnect failed: {e}")
-                times += 1
+                self.times += 1
                 time.sleep(5)  # Wait before retrying to reconnect
-        if times >= 60:
+        if self.times >= 2:
             logger.error("Failed to reconnect after multiple attempts.")
-            raise Exception("Failed to reconnect after multiple attempts.")
+            raise ConnectionError("Failed to reconnect after multiple attempts.")
