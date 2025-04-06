@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt
 from loguru import logger
 import ssl
 import time
-from p1_influx_db.mqtt import MessageStore
+from p1_influx_db.mqtt.message_store import MessageStore
 
 
 class MqttClient(mqtt.Client):
