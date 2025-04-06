@@ -1,8 +1,8 @@
 import paho.mqtt.client as mqtt
 from loguru import logger
 import ssl
-
-from p1_influx_db.dsmr_parse import dsmrMessages
+import time
+from message_store import MessageStore
 
 
 class MqttClient(mqtt.Client):
@@ -11,6 +11,9 @@ class MqttClient(mqtt.Client):
         self.broker = broker
         self.port = port
         self.client_id = client_id
+        self.message_store = MessageStore()
+        self.last_will = None
+
         self.tls_set(
             ca_certs=ca_certs,
             certfile=certfile,
@@ -19,21 +22,53 @@ class MqttClient(mqtt.Client):
             tls_version=ssl.PROTOCOL_TLS,
         )
 
+        self.on_connect = self.on_connect_handler
+        self.on_disconnect = self.on_disconnect_handler
+        self.on_publish = self.on_publish_handler
+
     def start(self):
-        self.connect(self.broker, self.port)
+        self.connect(self.broker, self.port, clean_start=mqtt.MQTT_CLEAN_START_FIRST_ONLY)
         self.loop_start()
 
     def stop(self):
         self.loop_stop()
 
-    def publish_messages(self, message: dsmrMessages):
-        topic = message.topic
-        payload = message.payload.model_dump_json()
-        messageInfo = self.publish(f"p1/{topic}", payload, qos=1)
-        messageInfo.wait_for_publish(1.5)
+    def on_connect_handler(self, client, userdata, flags, rc):
+        logger.debug("Connected with result code " + str(rc))
+        self.resend_messages()
 
-        status = messageInfo.rc
-        if status == 0:
-            logger.debug(f"Send `{payload}` to topic `{topic}`")
+    def on_disconnect_handler(self, client, userdata, rc):
+        logger.warning("Disconnected with result code " + str(rc))
+        if rc != 0:
+            logger.info("Unexpected disconnection. Attempting to reconnect...")
+            self.reconnect()
+
+    def on_publish_handler(self, client, userdata, mid):
+        logger.debug(f"Message {mid} published.")
+
+    def publish_messages(self, topic, payload):
+        message_info = self.publish(topic, payload, qos=1)
+        if message_info.rc == mqtt.MQTT_ERR_NO_CONN:
+            logger.error("Not connected. Storing message for later.")
+            self.message_store.add_message(topic, payload)
         else:
-            logger.error(f"Failed to send message to topic {topic}")
+            message_info.wait_for_publish(1.5)
+
+    def resend_messages(self):
+        while True:
+            message = self.message_store.get_message()
+            if message is None:
+                break
+            topic, payload = message
+            logger.info(f"Resending message to topic {topic}")
+            self.publish_messages(topic, payload)
+            time.sleep(1)  # Optional delay between resends
+
+    def reconnect(self):
+        while True:
+            try:
+                self.reconnect()
+                break
+            except Exception as e:
+                logger.error(f"Reconnect failed: {e}")
+                time.sleep(5)  # Wait before retrying to reconnect
