@@ -1,6 +1,48 @@
 # CHANGELOG
 
 
+## v2.3.0 (2025-04-06)
+
+### Features
+
+- Added retry behaviour by missing network ([#7](https://github.com/yfredrix/p1-influx-db/pull/7),
+  [`9fb6862`](https://github.com/yfredrix/p1-influx-db/commit/9fb6862b30ebce98340e5eabc5ab75614e2e9308))
+
+* feat: Implement reconnect logic for MQTT client on dead queue presence
+
+* feat: Use built in functionality to retry on disconnect
+
+* fix: Refactor import statements for MessageStore in MQTT client
+
+* fix: change circulair import
+
+* fix: recursion issues
+
+* fix: Add MQTT client connection and disconnection handlers
+
+* feat: Implement reconnect loop with retry mechanism for MQTT client
+
+* fix: Adjust reconnect loop to limit attempts and improve error handling
+
+* fix: Allow reconnection for 5 minutes and use the correct topic
+
+* fix: validate times
+
+Temporary block after 2 times
+
+* fix: Stop and loop stop on failed reconnection attempts
+
+* fix: Log reconnection attempts in reconnect loop
+
+* fix: Add exception handling for threading and improve error logging
+
+* fix: Enhance exception handling in MQTT client to raise detailed errors
+
+* fix: Update reconnect logic to allow more attempts and improve error handling
+
+* fix: Change exit method on failed reconnection to use os._exit for immediate termination
+
+
 ## v2.2.0 (2025-04-06)
 
 ### Chores
