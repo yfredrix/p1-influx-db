@@ -83,4 +83,6 @@ class MqttClient(mqtt.Client):
                 time.sleep(5)  # Wait before retrying to reconnect
         if self.times >= 2:
             logger.error("Failed to reconnect after multiple attempts.")
+            self.stop()
+            self.loop_stop()
             raise ConnectionError("Failed to reconnect after multiple attempts.")
