@@ -1,8 +1,10 @@
+import traceback
 import paho.mqtt.client as mqtt
 from loguru import logger
 import ssl
 import time
 from p1_influx_db.mqtt.message_store import MessageStore
+import threading
 
 
 def on_connect_handler(client, userdata, flags, rc, properties):
@@ -21,6 +23,9 @@ def on_disconnect_handler(client, userdata, flags, rc, properties):
 def on_publish_handler(client, userdata, mid, rc, properties):
     logger.debug(f"Message {mid} published.")
 
+
+def handle_exceptions(e):
+    print(traceback.print_exception(e.exc_type, e.exc_value, e.exc_traceback))
 
 class MqttClient(mqtt.Client):
     def __init__(self, broker, port, client_id, ca_certs, certfile, key):
@@ -86,3 +91,6 @@ class MqttClient(mqtt.Client):
             self.stop()
             self.loop_stop()
             raise ConnectionError("Failed to reconnect after multiple attempts.")
+
+
+threading.excepthook = handle_exceptions
