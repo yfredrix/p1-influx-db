@@ -46,6 +46,12 @@ def mqttmain(config: Dict[str, Any]):
     try:
         for telegram in serial_reader.read_as_object():
             dead_queue = read_and_publish_p1(telegram, dsmrParser, client, dead_queue)
+            if dead_queue:
+                try:
+                    client.reconnect()
+                except ConnectionRefusedError:
+                    logger.error("Connection refused, trying again in 5 seconds")
+                    continue
             if len(dead_queue) > 2000:
                 raise RuntimeError("Dead queue is larger than 2000")
     except Exception as e:
