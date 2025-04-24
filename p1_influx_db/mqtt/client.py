@@ -71,7 +71,6 @@ class MqttClient(mqtt.Client):
             topic, payload = message
             logger.info(f"Resending message to topic {topic}")
             self.publish_messages(topic, payload)
-            time.sleep(1)  # Optional delay between resends
 
     def reconnect_loop(self):
         while self.times < self.max_times:
