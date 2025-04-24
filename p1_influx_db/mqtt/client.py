@@ -25,7 +25,8 @@ def on_publish_handler(client, userdata, mid, rc, properties):
 
 
 class MqttClient(mqtt.Client):
-    def __init__(self, broker, port, client_id, ca_certs, certfile, key):
+
+    def __init__(self, broker, port, client_id, ca_certs, certfile, key, max_times=60):
         super().__init__(mqtt.CallbackAPIVersion.VERSION2, protocol=mqtt.MQTTv5)
         self.broker = broker
         self.port = port
@@ -33,6 +34,7 @@ class MqttClient(mqtt.Client):
         self.message_store = MessageStore()
         self.last_will = None
         self.times = 0
+        self.max_times = max_times
 
         self.tls_set(
             ca_certs=ca_certs,
@@ -72,7 +74,7 @@ class MqttClient(mqtt.Client):
             time.sleep(1)  # Optional delay between resends
 
     def reconnect_loop(self):
-        while self.times < 60:
+        while self.times < self.max_times:
             try:
                 logger.info(f"Attempting to reconnect, times: {self.times}")
                 self.start()
@@ -82,7 +84,7 @@ class MqttClient(mqtt.Client):
                 logger.error(f"Reconnect failed: {e}")
                 self.times += 1
                 time.sleep(5)  # Wait before retrying to reconnect
-        if self.times >= 60:
+        if self.times >= self.max_times:
             logger.error("Failed to reconnect after multiple attempts.")
             self.stop()
             self.loop_stop()

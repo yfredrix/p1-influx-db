@@ -11,6 +11,7 @@ client_id = "client_id"
 ca_certs = "/etc/certificate/abc"
 certfile = "/etc/certificate/abc"
 key = "etc/certificate/key"
+max_times = 60
 
 [p1]
 device = "/dev/serial0"
