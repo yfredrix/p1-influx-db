@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.4.0 (2025-04-24)
+
+### Features
+
+- Settable max retry counts
+  ([`4a9aa1c`](https://github.com/yfredrix/p1-influx-db/commit/4a9aa1ce9838ff9be7854313ded9a4edb4869bd9))
+
+
 ## v2.3.1 (2025-04-06)
 
 ### Bug Fixes
