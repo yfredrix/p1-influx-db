@@ -1,7 +1,15 @@
 # CHANGELOG
 
 
+## v2.4.1 (2025-04-24)
+
+
 ## v2.4.0 (2025-04-24)
+
+### Bug Fixes
+
+- Remove optional delay between message resends
+  ([`661238e`](https://github.com/yfredrix/p1-influx-db/commit/661238efcbea7c400fddff3aa2dc0bfa94afc6c6))
 
 ### Features
 
