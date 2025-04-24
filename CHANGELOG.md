@@ -1,6 +1,15 @@
 # CHANGELOG
 
 
+## v2.5.0 (2025-04-24)
+
+### Features
+
+- Downgrade python version requirement from 3.10 to 3.9 in pyproject.toml
+  ([#8](https://github.com/yfredrix/p1-influx-db/pull/8),
+  [`6446760`](https://github.com/yfredrix/p1-influx-db/commit/64467600b935d097ba27dd7499709836c15f102e))
+
+
 ## v2.4.1 (2025-04-24)
 
 
