@@ -111,7 +111,7 @@ class dsmrParse:
 
         if hasattr(self, "gas"):
             mbus_devices = telegram.MBUS_DEVICES
-            logger.debug(f"Telegram has MBUS_DEVICES: {gas_device}")
+            logger.debug(f"Telegram has MBUS_DEVICES: {mbus_devices}")
             if mbus_devices:
                 gas_device = telegram.get_mbus_device_by_channel(1)
                 logger.debug(f"Telegram has MBUS_DEVICES: {gas_device}")
