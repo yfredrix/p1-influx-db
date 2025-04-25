@@ -109,25 +109,20 @@ class dsmrParse:
                 "latest_voltage_current",
             )
 
-        if hasattr(telegram, "HOURLY_GAS_METER_READING"):
+        if hasattr(self, "gas"):
             logger.debug(f"Telegram has HOURLY_GAS_METER_READING: {telegram.HOURLY_GAS_METER_READING}")
-            gas = p1Messages(
-                measurement="gas",
-                tags={
-                    "unit": "m3",
-                    "equipment_id": telegram.EQUIPMENT_IDENTIFIER_GAS.value,
-                },
-                fields={},
-                time=telegram.P1_MESSAGE_TIMESTAMP.value,
-            )
-            p1MessageList = self.fill_fields(
-                telegram,
-                self.gas,
-                gas,
-                p1MessageList,
-                "m3",
-                "latest_gas",
-            )
+            mbus_device = telegram.MBUS_DEVICES
+            if mbus_device:
+                mbus_device = telegram.get_mbus_device_by_channel(1)
+                gas = p1Messages(
+                    measurement="gas",
+                    tags={
+                        "unit": "m3",
+                        "equipment_id": mbus_device.EQUIPMENT_IDENTIFIER_GAS.value,
+                    },
+                    fields={"hourly": float(telegram.HOURLY_GAS_METER_READING.value)},
+                    time=telegram.P1_MESSAGE_TIMESTAMP.value,
+                )
         return p1MessageList
 
     def fill_fields(
