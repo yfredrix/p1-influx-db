@@ -1,9 +1,15 @@
 # CHANGELOG
 
 
+## v2.5.4 (2025-04-25)
+
+
 ## v2.5.3 (2025-04-25)
 
 ### Bug Fixes
+
+- Enhance gas measurement handling with debug logging and correct device identification
+  ([`39bac7e`](https://github.com/yfredrix/p1-influx-db/commit/39bac7e7de57bc0de37ad8547d3a0ab160672bba))
 
 - Update gas measurement handling to include hourly reading and mbus device check
   ([`8d1bf6e`](https://github.com/yfredrix/p1-influx-db/commit/8d1bf6e98d74d775c1d1c530ff8c0571bec9ce29))
