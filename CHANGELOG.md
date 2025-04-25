@@ -1,12 +1,19 @@
 # CHANGELOG
 
 
+## v2.5.6 (2025-04-25)
+
+
 ## v2.5.5 (2025-04-25)
 
 ### Bug Fixes
 
 - Correct logging of MBUS_DEVICES in gas measurement handling
   ([`9c0dc3a`](https://github.com/yfredrix/p1-influx-db/commit/9c0dc3ab2272ae3406743ce8357548ee30583ccf))
+
+- Update gas measurement handling to correctly retrieve equipment identifier and meter reading from
+  MBUS_DEVICES
+  ([`e63fd55`](https://github.com/yfredrix/p1-influx-db/commit/e63fd554a5a7b35453ef3ba85b96eb1046d3106c))
 
 
 ## v2.5.4 (2025-04-25)
