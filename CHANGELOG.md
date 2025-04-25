@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.5.3 (2025-04-25)
+
+### Bug Fixes
+
+- Update gas measurement handling to include hourly reading and mbus device check
+  ([`8d1bf6e`](https://github.com/yfredrix/p1-influx-db/commit/8d1bf6e98d74d775c1d1c530ff8c0571bec9ce29))
+
+
 ## v2.5.2 (2025-04-25)
 
 ### Bug Fixes
