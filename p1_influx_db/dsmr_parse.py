@@ -109,7 +109,7 @@ class dsmrParse:
                 "latest_voltage_current",
             )
 
-        if hasattr(self, "gas"):
+        if hasattr(telegram, "HOURLY_GAS_METER_READING"):
             gas = p1Messages(
                 measurement="gas",
                 tags={
