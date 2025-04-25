@@ -113,15 +113,15 @@ class dsmrParse:
             mbus_devices = telegram.MBUS_DEVICES
             logger.debug(f"Telegram has MBUS_DEVICES: {mbus_devices}")
             if mbus_devices:
-                gas_device = telegram.get_mbus_device_by_channel(1)
+                gas_device = mbus_devices[0]
                 logger.debug(f"Telegram has MBUS_DEVICES: {gas_device}")
                 gas = p1Messages(
                     measurement="gas",
                     tags={
                         "unit": "m3",
-                        "equipment_id": gas_device.EQUIPMENT_IDENTIFIER_GAS.value,
+                        "equipment_id": gas_device.MBUS_EQUIPMENT_IDENTIFIER.value,
                     },
-                    fields={"hourly": float(telegram.HOURLY_GAS_METER_READING.value)},
+                    fields={"hourly": float(gas_device.MBUS_METER_READING.value)},
                     time=telegram.P1_MESSAGE_TIMESTAMP.value,
                 )
                 p1MessageList.append(dsmrMessages(topic="latest_gas", payload=gas))
