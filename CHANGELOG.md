@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.5.1 (2025-04-25)
+
+### Bug Fixes
+
+- Update gas measurement condition to check for telegram attribute
+  ([`5e9c89a`](https://github.com/yfredrix/p1-influx-db/commit/5e9c89a27dce297e55f0209ad2a3ea7eac94e55a))
+
+
 ## v2.5.0 (2025-04-24)
 
 ### Features
