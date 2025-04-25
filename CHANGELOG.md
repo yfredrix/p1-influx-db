@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.5.2 (2025-04-25)
+
+### Bug Fixes
+
+- Add debug logging for HOURLY_GAS_METER_READING in telegram parsing
+  ([`bcee4d2`](https://github.com/yfredrix/p1-influx-db/commit/bcee4d21f8c0d46b699022cc9eb382fef1297670))
+
+
 ## v2.5.1 (2025-04-25)
 
 ### Bug Fixes
