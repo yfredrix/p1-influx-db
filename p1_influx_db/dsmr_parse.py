@@ -110,6 +110,7 @@ class dsmrParse:
             )
 
         if hasattr(telegram, "HOURLY_GAS_METER_READING"):
+            logger.debug(f"Telegram has HOURLY_GAS_METER_READING: {telegram.HOURLY_GAS_METER_READING}")
             gas = p1Messages(
                 measurement="gas",
                 tags={
