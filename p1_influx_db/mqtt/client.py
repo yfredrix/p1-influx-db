@@ -64,13 +64,12 @@ class MqttClient(mqtt.Client):
             message_info.wait_for_publish(timeout)
 
     def resend_messages(self):
-        while True:
-            message = self.message_store.get_message()
-            if message is None:
-                break
+        message = self.message_store.get_message()
+        while message:
             topic, payload = message
             logger.info(f"Resending message to topic {topic}")
-            self.publish_messages(topic, payload, 0.2)
+            self.publish_messages(topic, payload, 0.05)
+            message = self.message_store.get_message()
 
     def reconnect_loop(self):
         while self.times < self.max_times:
