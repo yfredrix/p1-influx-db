@@ -1,9 +1,15 @@
 # CHANGELOG
 
 
+## v2.5.8 (2025-05-16)
+
+
 ## v2.5.7 (2025-05-16)
 
 ### Bug Fixes
+
+- Add timeout parameter to publish_messages method and update wait time for message publishing
+  ([`e85fef0`](https://github.com/yfredrix/p1-influx-db/commit/e85fef0213cea599b7159b11e1eefa7039c148d8))
 
 - Reduce wait time for message publish confirmation in MqttClient
   ([`97f10a5`](https://github.com/yfredrix/p1-influx-db/commit/97f10a53719783ab6466ee241d742b0d6d9760bc))
