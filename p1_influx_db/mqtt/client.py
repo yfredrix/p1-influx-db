@@ -34,6 +34,7 @@ class MqttClient(mqtt.Client):
         self.last_will = None
         self.times = 0
         self.max_times = max_times
+        self.keepalive = 240
 
         self.tls_set(
             ca_certs=ca_certs,
@@ -54,13 +55,13 @@ class MqttClient(mqtt.Client):
     def stop(self):
         self.loop_stop()
 
-    def publish_messages(self, topic, payload):
+    def publish_messages(self, topic, payload, timeout=1.5):
         message_info = self.publish(topic, payload, qos=1)
         if message_info.rc == mqtt.MQTT_ERR_NO_CONN:
             logger.error("Not connected. Storing message for later.")
             self.message_store.add_message(topic, payload)
         else:
-            message_info.wait_for_publish(0.5)
+            message_info.wait_for_publish(timeout)
 
     def resend_messages(self):
         while True:
@@ -69,7 +70,7 @@ class MqttClient(mqtt.Client):
                 break
             topic, payload = message
             logger.info(f"Resending message to topic {topic}")
-            self.publish_messages(topic, payload)
+            self.publish_messages(topic, payload, 0.2)
 
     def reconnect_loop(self):
         while self.times < self.max_times:
