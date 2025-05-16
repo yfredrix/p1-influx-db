@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.5.9 (2025-05-16)
+
+### Bug Fixes
+
+- Optimize resend_messages method to reduce unnecessary iterations
+  ([`4853ae9`](https://github.com/yfredrix/p1-influx-db/commit/4853ae905b838fd19e75259686e52de8f8572b5f))
+
+
 ## v2.5.8 (2025-05-16)
 
 
