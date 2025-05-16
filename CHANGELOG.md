@@ -1,6 +1,17 @@
 # CHANGELOG
 
 
+## v2.5.7 (2025-05-16)
+
+### Bug Fixes
+
+- Reduce wait time for message publish confirmation in MqttClient
+  ([`97f10a5`](https://github.com/yfredrix/p1-influx-db/commit/97f10a53719783ab6466ee241d742b0d6d9760bc))
+
+- Remove unnecessary blank line and standardize wait_for_publish argument format
+  ([`648e8cb`](https://github.com/yfredrix/p1-influx-db/commit/648e8cb3295eab1c7393019e08b957f7d3195deb))
+
+
 ## v2.5.6 (2025-04-25)
 
 
