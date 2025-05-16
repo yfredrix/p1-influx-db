@@ -25,7 +25,6 @@ def on_publish_handler(client, userdata, mid, rc, properties):
 
 
 class MqttClient(mqtt.Client):
-
     def __init__(self, broker, port, client_id, ca_certs, certfile, key, max_times=60):
         super().__init__(mqtt.CallbackAPIVersion.VERSION2, protocol=mqtt.MQTTv5)
         self.broker = broker
@@ -61,7 +60,7 @@ class MqttClient(mqtt.Client):
             logger.error("Not connected. Storing message for later.")
             self.message_store.add_message(topic, payload)
         else:
-            message_info.wait_for_publish(.5)
+            message_info.wait_for_publish(0.5)
 
     def resend_messages(self):
         while True:
