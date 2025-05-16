@@ -61,7 +61,7 @@ class MqttClient(mqtt.Client):
             logger.error("Not connected. Storing message for later.")
             self.message_store.add_message(topic, payload)
         else:
-            message_info.wait_for_publish(1.5)
+            message_info.wait_for_publish(.5)
 
     def resend_messages(self):
         while True:
