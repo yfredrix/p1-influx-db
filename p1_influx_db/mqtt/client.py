@@ -26,10 +26,9 @@ def on_publish_handler(client, userdata, mid, rc, properties):
 
 class MqttClient(mqtt.Client):
     def __init__(self, broker, port, client_id, ca_certs, certfile, key, max_times=60):
-        super().__init__(mqtt.CallbackAPIVersion.VERSION2, protocol=mqtt.MQTTv5)
+        super().__init__(mqtt.CallbackAPIVersion.VERSION2, protocol=mqtt.MQTTv5, client_id=client_id)
         self.broker = broker
         self.port = port
-        self.client_id = client_id
         self.message_store = MessageStore()
         self.last_will = None
         self.times = 0
