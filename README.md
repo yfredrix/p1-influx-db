@@ -1,16 +1,61 @@
 # p1-influx-db
-A python implementation for pushing data to influxDB from a P1 meter
 
-This packages uses the HTTP api from influxDB to store the given data of the P1 meter
-The package contains a python module named p1_influx_db which requires a path towards the config as input. An example config can be found in the package.
-This config is a toml which let's the module know what kind of behaviour you want to use. In order to process the DSMR p1 information the config requires a [p1] clause. Depending on the method of transmission either a [influx2] block or a [mqtt] block. Both are valid protocols for transmitting the data.
-The keys are the given fields that you want to receive data on; these can be changed depending on the type of meter available and the interest in the values.
+Python package for reading DSMR/P1 telegrams from a smart meter and publishing the parsed values either to InfluxDB 2 over HTTP or to an MQTT broker.
 
-## Getting started
+## What it does
 
-To start the module just use `python -m p1_influx_db --config <path_to_config>`
+The package exposes a module named `p1_influx_db` that reads telegrams from the configured serial device, parses the selected DSMR values, and forwards them using one of these output modes:
 
-For which the following is an example config:
+- `influx2`: write parsed measurements to InfluxDB 2 using the HTTP API
+- `mqtt`: publish parsed measurements as JSON messages over MQTT
+
+The active behavior is driven by a TOML configuration file. A packaged example is available at [p1_influx_db/example_config.toml](p1_influx_db/example_config.toml).
+
+## Requirements
+
+- Python 3.11 or newer
+- Access to the P1 serial device exposed by your meter
+- One configured output target: InfluxDB 2 or MQTT
+
+## Installation
+
+Install from PyPI:
+
+```bash
+pip install p1-influx-db
+```
+
+Install from source with Poetry:
+
+```bash
+python -m poetry install
+```
+
+The project metadata currently defines `mqtt`, `influxdb`, and `publishmethods` extras, but the base install already includes both transport dependencies.
+
+## Running
+
+Run the module with an explicit config file:
+
+```bash
+python -m p1_influx_db --config /path/to/config.toml
+```
+
+If `--config` is omitted, the module falls back to `./p1_influx_db/example_config.toml`.
+
+## Configuration
+
+The config file must contain:
+
+- a `[p1]` section with the serial device settings
+- either an `[influx2]` section or an `[mqtt]` section
+
+If both `[mqtt]` and `[influx2]` are present, the current entrypoint selects MQTT first.
+
+All `keys` entries under `[p1.*]` should match DSMR field names exposed by `dsmr-parser`, such as `ELECTRICITY_USED_TARIFF_1` or `INSTANTANEOUS_VOLTAGE_L1`.
+
+Example configuration:
+
 ```toml
 # TOML-based config
 [influx2]
@@ -25,6 +70,7 @@ client_id = "client_id"
 ca_certs = "/etc/certificate/abc"
 certfile = "/etc/certificate/abc"
 key = "etc/certificate/key"
+max_times = 60
 
 [p1]
 device = "/dev/serial0"
@@ -59,7 +105,8 @@ keys = ["INSTANTANEOUS_CURRENT_L1",
 keys = ["HOURLY_GAS_METER_READING"]
 ```
 
-## Instalation
+### Output behavior
 
-The package has multiple modes of installation namely full, influxdb or mqtt. In other to save space it is advised to use the extra install fields just for the protocol required so either.
-`pip install p1-influx-db[mqtt]` or `pip install p1-influx-db[influxdb]`
+- InfluxDB mode reads the `influx2` configuration from the same TOML file and writes parsed measurements asynchronously.
+- MQTT mode publishes JSON payloads under topics prefixed with `p1/`.
+- MQTT TLS certificates are required by the current client implementation because TLS is always enabled.
