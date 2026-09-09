@@ -749,20 +749,19 @@ files = [
 
 [[package]]
 name = "dsmr-parser"
-version = "1.6.0"
+version = "1.11.2"
 description = "Library to parse Dutch Smart Meter Requirements (DSMR)"
 optional = false
-python-versions = "*"
+python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "dsmr_parser-1.6.0-py3-none-any.whl", hash = "sha256:0fe76d1833ebdd37472da9e789c913be85f292a7a81d4faff5642b16cd4e99ce"},
-    {file = "dsmr_parser-1.6.0.tar.gz", hash = "sha256:95902b5d1825394829c79b0d9285176ec4eda9ac61dcc83e4c8cb8d5affed104"},
+    {file = "dsmr_parser-1.11.2-py3-none-any.whl", hash = "sha256:844dc0f6e46d9bb070c46f861589b289858bc2e66c5480442084c882a17ad672"},
+    {file = "dsmr_parser-1.11.2.tar.gz", hash = "sha256:fb910c49c834ef67460124f014203bc0521fff12fda14f8ca36b5634f8945d7a"},
 ]
 
 [package.dependencies]
 dlms_cosem = "21.3.2"
-pyserial = ">=3,<4"
-pyserial-asyncio-fast = ">=0.11"
+serialx = ">=1.8,<2"
 Tailer = "0.4.1"
 
 [[package]]
@@ -1760,21 +1759,6 @@ files = [
 cp2110 = ["hidapi"]
 
 [[package]]
-name = "pyserial-asyncio-fast"
-version = "0.16"
-description = "Python Serial Port Extension - Asynchronous I/O support"
-optional = false
-python-versions = ">=3.9"
-groups = ["main"]
-files = [
-    {file = "pyserial_asyncio_fast-0.16-py3-none-any.whl", hash = "sha256:88939d94e341a04c0c8bc3c1ed4e874439cb5a1e21ccfb0fd7315a8e45df1687"},
-    {file = "pyserial_asyncio_fast-0.16.tar.gz", hash = "sha256:fd52643380406739d777014b0aea0873d756b542eb62f7556567239cec007115"},
-]
-
-[package.dependencies]
-pyserial = "*"
-
-[[package]]
 name = "pytest"
 version = "9.0.3"
 description = "pytest: simple powerful testing with Python"
@@ -1934,6 +1918,38 @@ files = [
 ]
 
 [[package]]
+name = "pywin32"
+version = "312"
+description = "Python for Windows Extensions"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+markers = "platform_system == \"Windows\""
+files = [
+    {file = "pywin32-312-cp310-cp310-win32.whl", hash = "sha256:772235332b5d1024c696f11cea1ae4be7930f0a8b894bb43db14e3f435f1ff7e"},
+    {file = "pywin32-312-cp310-cp310-win_amd64.whl", hash = "sha256:5dbc35d2b5320dc07f25fa31269cfb767471002b17de5eb067d03da68c7cb2db"},
+    {file = "pywin32-312-cp310-cp310-win_arm64.whl", hash = "sha256:3020656e34f1cf7faeb7bccd2b84653a607c6ff0c55ada85e6487d61716deabd"},
+    {file = "pywin32-312-cp311-cp311-win32.whl", hash = "sha256:17948aeadbdb091f0ced6ef0841620794e68327b94ee415571c1203594b7215c"},
+    {file = "pywin32-312-cp311-cp311-win_amd64.whl", hash = "sha256:d11417d84412f859b722fad0841b3614459ed0047f7542d8362e77884f6b6e8a"},
+    {file = "pywin32-312-cp311-cp311-win_arm64.whl", hash = "sha256:b2200a054ca6d6625c4842fc56a4976a4b47f96b73dbe5538c3f813a80359f47"},
+    {file = "pywin32-312-cp312-cp312-win32.whl", hash = "sha256:dab4f65ac9c4e48400a2a0530c46c3c579cd5905ecd11b80692373915269208b"},
+    {file = "pywin32-312-cp312-cp312-win_amd64.whl", hash = "sha256:b457f6d628a47e8a7346ce22acb7e1a46a4a78b52e1d17e1af56871bd19a93bc"},
+    {file = "pywin32-312-cp312-cp312-win_arm64.whl", hash = "sha256:6017c58e12f6809fbb0555b75df144c2922a9ffd18e4b9b5afa863b6c1a9d950"},
+    {file = "pywin32-312-cp313-cp313-win32.whl", hash = "sha256:7a27df850933d16a8eabfbaeb73d52b273e2da667f80d70b01a89d1f6828d02c"},
+    {file = "pywin32-312-cp313-cp313-win_amd64.whl", hash = "sha256:c53e878d15a1c44788082bfe712a905433473aa38f86375b7cf8b45e3acbaaf9"},
+    {file = "pywin32-312-cp313-cp313-win_arm64.whl", hash = "sha256:59aba5d5940842075343a5ddc6b11f1cdf0d1567fe745290359dfbcc7c2eb831"},
+    {file = "pywin32-312-cp314-cp314-win32.whl", hash = "sha256:a77a90fbb6881238d2ca9c6fd797b25817f3768fe78d214a90137ff055a75f5b"},
+    {file = "pywin32-312-cp314-cp314-win_amd64.whl", hash = "sha256:a4dd3a848290ef724347b19f301045831d8e802fa4464f491b98b1e0a081432e"},
+    {file = "pywin32-312-cp314-cp314-win_arm64.whl", hash = "sha256:9fce94568364e0155e6dfb781ac5d95903be8baf28670632beab1b523f300daa"},
+    {file = "pywin32-312-cp315-cp315-win32.whl", hash = "sha256:5c1fbe4a937a73ae9297384a3da38518cbc694c68ad8a809b2e19acd350f03ed"},
+    {file = "pywin32-312-cp315-cp315-win_amd64.whl", hash = "sha256:c2f03a0f73f804a13c2735b99392b0cd426bb4f2c4d0178e5ac966a0f21618d5"},
+    {file = "pywin32-312-cp315-cp315-win_arm64.whl", hash = "sha256:a8597d28f267b39074aef51fa593530082b39cbe5a074226096857b1fed2dfb9"},
+    {file = "pywin32-312-cp39-cp39-win32.whl", hash = "sha256:d620900033cc7531e50727c3c8333091df5dd3ffe6d68cdca38c03f5821408d5"},
+    {file = "pywin32-312-cp39-cp39-win_amd64.whl", hash = "sha256:dc90147579a905b8635e1b0ec6514967dcb07e6e0d9c42f1477feef14cac23bb"},
+    {file = "pywin32-312-cp39-cp39-win_arm64.whl", hash = "sha256:02ebca0f0242b75292e218065004310d6a477407c09fa449bfe4f6022bc0c0fc"},
+]
+
+[[package]]
 name = "reactivex"
 version = "4.1.0"
 description = "ReactiveX (Rx) for Python"
@@ -2004,6 +2020,32 @@ pygments = ">=2.13.0,<3.0.0"
 
 [package.extras]
 jupyter = ["ipywidgets (>=7.5.1,<9)"]
+
+[[package]]
+name = "serialx"
+version = "1.10.0"
+description = "Serial library with native sync and async support for Windows, Linux, macOS, and other platforms"
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "serialx-1.10.0-cp310-abi3-macosx_10_12_x86_64.whl", hash = "sha256:7ecc1dcbefbe6a98f8f03bbe54bb1020fdd060c42df2853baf84d1c88859d6de"},
+    {file = "serialx-1.10.0-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:f03549520c156fb18a0746ab20a4d3e0e4ce03d507213e561c5064d649f35206"},
+    {file = "serialx-1.10.0-cp310-abi3-win32.whl", hash = "sha256:ce3f62cf43b9453656369463a436571c2100ba1adcd8a4007baaa0ea497b120f"},
+    {file = "serialx-1.10.0-cp310-abi3-win_amd64.whl", hash = "sha256:7ef6639ff9dc47d47c6459876934eb5524d7199d090ed002328846b875f4604b"},
+    {file = "serialx-1.10.0-cp310-abi3-win_arm64.whl", hash = "sha256:97204439ecfb1881e0503201fef645771676b0ed07107ae329e161e3e5dc86c4"},
+    {file = "serialx-1.10.0-py3-none-any.whl", hash = "sha256:256712ba329d9ce0d1d08e0ddc6e9cd5d55784d15d47a70ea64f3610b37e8091"},
+    {file = "serialx-1.10.0.tar.gz", hash = "sha256:9b69e8a31059bfbfff74186ea9da6790d0a21bb107451a833c10789e58aa368c"},
+]
+
+[package.dependencies]
+pywin32 = {version = "*", markers = "platform_system == \"Windows\""}
+typing-extensions = ">=4.13.0"
+
+[package.extras]
+dev = ["aioesphomeapi (>=46.0.0) ; python_version >= \"3.11\"", "async-timeout (>=5.0.1)", "codespell (>=2.4.2)", "mypy (>=2.1.0)", "prek (>=0.3.11)", "psutil (>=7.2.2)", "pylint (>=3.3.0)", "pytest (>=9.0.1)", "pytest-asyncio (>=1.3.0)", "pytest-timeout (>=2.4.0)", "pytest-xdist (>=3.8.0)", "ruff (>=0.14.6)", "tomli (>=2.3.0) ; python_version < \"3.11\"", "types-psutil (>=7.2.2.20260508)", "types-pywin32 (>=311.0.0.20260508)", "types-setuptools (>=82.0.0.20260508)", "uv (>=0.11.14)"]
+docs = ["furo (>=2025.7.19)", "myst-parser (>=4.0.1,<5) ; python_version < \"3.11\"", "myst-parser (>=5) ; python_version >= \"3.11\"", "sphinx (>=7,<8.2.3) ; python_version < \"3.11\"", "sphinx (>=8.2.3) ; python_version >= \"3.11\"", "sphinx-autobuild (>=2024.10.3) ; python_version < \"3.11\"", "sphinx-autobuild (>=2025.8.25) ; python_version >= \"3.11\"", "sphinx-design (>=0.6)"]
+esphome = ["aioesphomeapi (>=46.0.0) ; python_version >= \"3.11\""]
 
 [[package]]
 name = "shellingham"
